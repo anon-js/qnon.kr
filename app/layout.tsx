@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { footer, header, logo, logoLink, nav, navLink } from "./layout.css";
+import { header, logo, logoLink, nav, navLink, main, footer } from "./layout.css";
 import Link from "next/link";
 
 // Meta Tag
@@ -48,7 +48,7 @@ export default function RootLayout({
               <Link href="./contact" className={navLink}>연락</Link>
           </nav>
         </header>
-        <main>
+        <main className={main}>
           {children}
         </main>
         <footer className={footer}>

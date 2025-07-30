@@ -5,12 +5,12 @@ export const header = style({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  justifyContent: 'center',
-  gap: '16px',
+  justifyContent: 'space-between',
+  margin: '0.2rem 0',
 });
 
 export const logo = style({
-  margin: '12px',
+  margin: '0.8rem',
 });
 
 export const logoLink = style({
@@ -22,19 +22,28 @@ export const logoLink = style({
 });
 
 export const nav = style({
-  margin: 0,
+  margin: '0 0.8rem',
   padding: 0,
   display: 'flex',
   flexDirection: 'row',
-  gap: '16px',
+  gap: '1rem',
 });
 
 export const navLink = style({
   textDecoration: 'none',
-  color: '#7f7f8b',
+  color: '#595961',
   ':hover': {
     color: '#1d1d1f',
   },
+});
+
+export const main = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  flex: 1,
+  padding: '4rem',
 });
 
 export const footer = style({
@@ -42,6 +51,6 @@ export const footer = style({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-  color: '#7f7f8b',
-  padding: '12px 0',
+  color: '#595961',
+  padding: '0.8rem',
 });

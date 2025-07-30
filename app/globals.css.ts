@@ -15,4 +15,13 @@ globalStyle("html, body", {
   display: 'flex',
   flexDirection: 'column',
   color: '#1d1d1f',
+  fontSize: '1rem',
+});
+
+globalStyle("p", {
+  fontSize: '1.2rem',
+  margin: 0,
+  letterSpacing: '-0.02em',
+  color: '#2b2b2e',
+  lineHeight: '1.6',
 });
