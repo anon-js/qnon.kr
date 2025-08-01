@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { h2, p, button } from "./not-found.css"; // Assuming you have a CSS module for styles
+import { h2, p, button } from "@/app/not-found.css";
 
 export default function NotFound() {
   const router = useRouter();
