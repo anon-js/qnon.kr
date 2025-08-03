@@ -3,8 +3,8 @@
 import { motion, MotionProps } from 'framer-motion';
 import {
   section,
-  title,
-  description,
+  titleStyle,
+  descriptionStyle,
 } from './section.css';
 
 const fadeInUp = {
@@ -14,14 +14,14 @@ const fadeInUp = {
 };
 
 interface SectionProps extends Partial<MotionProps> {
-  titleText: string;
-  descriptionText: React.ReactNode;
+  title: string;
+  description: React.ReactNode;
   children?: React.ReactNode;
 }
 
 export default function Section({
-  titleText,
-  descriptionText,
+  title,
+  description,
   children,
   ...motionProps
 }: SectionProps) {
@@ -33,8 +33,8 @@ export default function Section({
       transition={fadeInUp.transition}
       {...motionProps}
     >
-      <h2 className={title}>{titleText}</h2>
-      <p className={description}>{descriptionText}</p>
+      <h2 className={titleStyle}>{title}</h2>
+      <p className={descriptionStyle}>{description}</p>
       {children}
     </motion.section>
   );
