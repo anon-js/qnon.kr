@@ -14,13 +14,13 @@ const fadeInUp = {
 };
 
 interface SectionProps extends Partial<MotionProps> {
-  title: string;
+  titleText: string;
   descriptionText: React.ReactNode;
   children?: React.ReactNode;
 }
 
 export default function Section({
-  title,
+  titleText,
   descriptionText,
   children,
   ...motionProps
@@ -33,7 +33,7 @@ export default function Section({
       transition={fadeInUp.transition}
       {...motionProps}
     >
-      <h2 className={title}>{title}</h2>
+      <h2 className={title}>{titleText}</h2>
       <p className={description}>{descriptionText}</p>
       {children}
     </motion.section>
