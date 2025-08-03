@@ -4,7 +4,7 @@ export default function ContactSection() {
   return (
     <Section
       title="Contact"
-      descriptionText={
+      description={
         <>
           여기는 연락 페이지로,<br/>
           익숙하지만 웹페이지에서는 좀 새로운 시도를 할 생각이에요 :)<br/>
