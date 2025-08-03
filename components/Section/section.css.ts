@@ -7,14 +7,14 @@ export const section = style({
   color: '#1a1a1a',
 });
 
-export const title = style({
+export const titleStyle = style({
   fontSize: '2.5rem',
   fontWeight: 'bold',
   margin: '0',
   lineHeight: 1.4,
 });
 
-export const description = style({
+export const descriptionStyle = style({
   marginTop: '1.5rem',
   fontSize: '1.1rem',
   lineHeight: 1.7,
