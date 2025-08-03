@@ -1,30 +1,39 @@
 import { style } from '@vanilla-extract/css';
 
-export const h2 = style({
-  fontSize: '2rem',
-  marginBottom: '1rem',
-  letterSpacing: '-0.02em',
+export const container = style({
+  height: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: '#fdfdfd',
+  textAlign: 'center',
+  padding: '2rem',
 });
 
-export const p = style({
-  marginTop: 0,
-  marginBottom: '4rem',
+export const heading = style({
+  fontSize: '4rem',
+  fontWeight: 'bold',
+  margin: 0,
+  color: '#1d1d1f',
 });
 
-export const button = style({
-  padding: '0.5rem 1rem',
+export const subtext = style({
+  fontSize: '1.2rem',
+  marginTop: '1rem',
+});
+
+export const backButton = style({
+  marginTop: '4rem',
+  padding: '0.8rem 1.5rem',
   fontSize: '1rem',
-  backgroundColor: '#0070f3',
-  color: '#fff',
+  borderRadius: '6px',
   border: 'none',
-  borderRadius: '4px',
+  background: '#1e6dff',
+  color: '#fff',
   cursor: 'pointer',
+  transition: 'background 0.3s',
   ':hover': {
-    backgroundColor: '#005bb5',
+    background: '#1255d1',
   },
 });
-
-// section
-// h2
-// p
-// button
