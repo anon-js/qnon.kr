@@ -1,41 +1,64 @@
 'use client';
 
-import { motion, MotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   section,
   titleStyle,
   descriptionStyle,
 } from './section.css';
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
-
-interface SectionProps extends Partial<MotionProps> {
+interface SectionProps {
   title: string;
   description: React.ReactNode;
   children?: React.ReactNode;
 }
 
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 },
+};
+
+const MotionText = ({
+  as,
+  className,
+  children,
+}: {
+  as: 'h2' | 'p';
+  className: string;
+  children: React.ReactNode;
+}) => {
+  const Tag = motion[as];
+  return (
+    <Tag
+      className={className}
+      initial={fadeInUp.initial}
+      animate={fadeInUp.animate}
+      transition={fadeInUp.transition}
+    >
+      {children}
+    </Tag>
+  );
+};
+
 export default function Section({
   title,
   description,
   children,
-  ...motionProps
 }: SectionProps) {
   return (
-    <motion.section
-      className={section}
-      initial={fadeInUp.initial}
-      animate={fadeInUp.animate}
-      transition={fadeInUp.transition}
-      {...motionProps}
-    >
-      <h2 className={titleStyle}>{title}</h2>
-      <p className={descriptionStyle}>{description}</p>
+    <section className={section}>
+      <motion.h2
+        className={titleStyle}
+        initial={false}
+      >
+        {title}
+      </motion.h2>
+      <MotionText as="p" className={descriptionStyle}>
+        {description}
+      </MotionText>
+
       {children}
-    </motion.section>
+    </section>
   );
 }

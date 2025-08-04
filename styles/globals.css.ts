@@ -24,9 +24,7 @@ globalStyle("h1, h2, h3, h4, h5, h6", {
 });
 
 globalStyle("p", {
-  fontSize: '1.025rem',
   margin: 0,
   letterSpacing: '-0.02em',
   color: '#38383b',
-  lineHeight: '1.6',
 });
