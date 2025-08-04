@@ -2,50 +2,52 @@
 
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import * as styles from './not-found.css';
+import Button from '@/components/Button';
+import {
+  container,
+  heading,
+  subtext,
+} from './not-found.css';
+import {
+  containerVariants,
+  headingVariants,
+  textVariants,
+  buttonMotion,
+} from '@/variants/not-found.variants';
 
-const Custom404 = () => {
+export default function NotFound() {
   const router = useRouter();
 
   return (
     <motion.div
-      className={styles.container}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      className={container}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
     >
       <motion.h1
-        className={styles.heading}
-        animate={{
-          x: [0, -7, 7, -5, 5, 0],
-        }}
-        transition={{
-          duration: 0.5,
-          repeat: Infinity,
-          ease: 'easeInOut',
-          repeatDelay: 5,
-        }}
+        className={heading}
+        variants={headingVariants}
+        initial="initial"
+        animate="animate"
       >
         404
       </motion.h1>
       <motion.p
-        className={styles.subtext}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
+        className={subtext}
+        variants={textVariants}
+        initial="hidden"
+        animate="visible"
       >
-        원하시는 페이지를 찾을 수 없어요.
+        원하시는 페이지를 찾을 수 없어요.<br />
+        올바른 주소를 입력했는지 확인해 주세요.
       </motion.p>
-      <motion.button
-        className={styles.backButton}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+      <Button
+        {...buttonMotion}
         onClick={() => router.push('/')}
       >
         홈으로 돌아가기
-      </motion.button>
+      </Button>
     </motion.div>
   );
 };
-
-export default Custom404;

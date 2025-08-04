@@ -1,9 +1,9 @@
-import AboutSection from '@/sections/AboutSection';
+import MainSection from '@/sections/MainSection';
 
 export default function Home() {
   return (
     <main>
-      <AboutSection />
+      <MainSection />
     </main>
   );
 }
