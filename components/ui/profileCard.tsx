@@ -17,8 +17,14 @@ import { useState } from 'react';
 export function ProfileCard() {
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
 
+  function handleCardClick() {
+    setIsOpenCard(!isOpenCard);
+  }
+
   return (
-    <Card className={`${isOpenCard ? 'w-full h-full absolute border-none justify-center' : ''}`}>
+    <Card
+      className={`transform transition-all duration-500 ${isOpenCard ? 'fixed w-full h-full rounded-none border-none' : 'relative w-md h-md'}`}
+    >
       <CardHeader>
         <CardTitle>anon</CardTitle>
         <CardDescription>프론트엔드 개발자</CardDescription>
@@ -42,10 +48,10 @@ export function ProfileCard() {
         </p>
       </CardContent>
       <CardFooter>
-        <Button variant="link" onClick={() => setIsOpenCard(!isOpenCard)}>
+        <Button variant="link" onClick={handleCardClick}>
           프로젝트 <ArrowUpRightIcon />
         </Button>
-        <Button variant="link" onClick={() => setIsOpenCard(!isOpenCard)}>
+        <Button variant="link" onClick={handleCardClick}>
           연혁 <ArrowUpRightIcon />
         </Button>
       </CardFooter>
