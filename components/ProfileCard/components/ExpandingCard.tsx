@@ -1,20 +1,31 @@
+'use client';
 import { Button } from '@/components/ui/button';
+import { ExpandingViewEnum, ExpandingViewProps } from '@/types/expandingView';
 import { XIcon } from 'lucide-react';
+import { CareerView } from './views/CareerView';
+import { EducationView } from './views/EducationView';
+import { ProjectView } from './views/ProjectView';
 
-interface ExpandingCardProps {
-  toggleExpand: () => void;
-  title: string;
-  description: string;
+function renderView(view: ExpandingViewEnum | undefined) {
+  switch (view) {
+    case ExpandingViewEnum.Project:
+      return <ProjectView />;
+    case ExpandingViewEnum.Career:
+      return <CareerView />;
+    case ExpandingViewEnum.Education:
+      return <EducationView />;
+    default:
+      return '오류가 발생했어요!';
+  }
 }
 
-export function ExpandingCard({ toggleExpand, title, description }: ExpandingCardProps) {
+export function ExpandingCard({ isExpandingView, toggleExpand }: ExpandingViewProps) {
   return (
     <div className="w-full h-full p-8">
-      <Button className="fixed top-6 right-6" variant="ghost" onClick={toggleExpand}>
+      <Button className="fixed top-6 right-6" variant="ghost" onClick={() => toggleExpand(ExpandingViewEnum.Default)}>
         <XIcon className="size-6" />
       </Button>
-      <h1 className="text-2xl font-bold">{title}</h1>
-      <p className="mt-2 text-sm text-gray-600">{description}</p>
+      {renderView(isExpandingView)}
     </div>
   );
 }
