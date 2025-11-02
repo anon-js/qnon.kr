@@ -26,8 +26,8 @@ const ActionButtonList: ActionButtonListType[] = [
     view: ExpandingViewEnum.Education,
   },
   {
-    label: '경력',
-    view: ExpandingViewEnum.Career,
+    label: '경험',
+    view: ExpandingViewEnum.Experience,
   },
 ];
 

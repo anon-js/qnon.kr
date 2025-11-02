@@ -2,16 +2,16 @@
 import { Button } from '@/components/ui/button';
 import { ExpandingViewEnum, ExpandingViewProps } from '@/types/expandingView';
 import { XIcon } from 'lucide-react';
-import { CareerView } from '../views/CareerView';
 import { EducationView } from '../views/EducationView';
+import { ExperienceView } from '../views/ExperienceView';
 import { ProjectView } from '../views/ProjectView';
 
 function renderView(view: ExpandingViewEnum | undefined) {
   switch (view) {
     case ExpandingViewEnum.Project:
       return <ProjectView />;
-    case ExpandingViewEnum.Career:
-      return <CareerView />;
+    case ExpandingViewEnum.Experience:
+      return <ExperienceView />;
     case ExpandingViewEnum.Education:
       return <EducationView />;
     default:
