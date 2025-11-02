@@ -5,7 +5,6 @@ import { easeInOut } from 'motion';
 import { AnimatePresence } from 'motion/react';
 import * as motion from 'motion/react-client';
 import { useEffect, useState } from 'react';
-import { BottomButtonGroup } from './components/BottomButtonGroup';
 import { DefaultCard } from './components/DefaultCard';
 import { ExpandingCard } from './components/ExpandingCard';
 
@@ -84,14 +83,13 @@ export function ProfileCard() {
             style={{ width: '100%', height: '100%' }}
           >
             {isExpandingView === ExpandingViewEnum.Default ? (
-              <DefaultCard name="anon" job_category="프론트엔드 개발자" />
+              <DefaultCard toggleExpand={toggleExpand} />
             ) : (
               <ExpandingCard isExpandingView={isExpandingView} toggleExpand={toggleExpand} />
             )}
           </motion.div>
         </AnimatePresence>
       </motion.div>
-      <BottomButtonGroup isExpandingView={isExpandingView} toggleExpand={toggleExpand} />
     </div>
   );
 }

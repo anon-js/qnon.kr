@@ -1,18 +1,21 @@
+import { TimelineItem } from '../components/TimelineItem';
+
+const careerList = [
+  {
+    date: '2023.01',
+    title: '제 8회 하이톤(8th Highthon)',
+    description: `처음 참가한 해커톤을 통해 협업과 유지보수의 중요성을 깨달았습니다.\n더 나은 실무경험을 쌓기 위해 노력하고 있습니다.`,
+  },
+];
+
 export function CareerView() {
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-bold">경력</h1>
-      <ol className="relative ms-2 border-s border-gray-200 dark:border-gray-700">
-        <li className="mb-10 ms-4">
-          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-          <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">현재</time>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">준비 중...</h3>
-          <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-            아직 경력 부분을 제작 중에 있어요.
-            <br />
-            금방 내용을 채울게요!
-          </p>
-        </li>
+      <ol className="flex flex-col gap-4 relative mx-2 py-8 border-s border-gray-200 dark:border-gray-700">
+        {careerList.map((career) => (
+          <TimelineItem key={career.date} {...career} />
+        ))}
       </ol>
     </div>
   );
