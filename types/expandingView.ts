@@ -6,6 +6,6 @@ export interface ExpandingViewProps {
 export enum ExpandingViewEnum {
   Default = 'default',
   Project = 'project',
-  Career = 'career',
+  Experience = 'experience',
   Education = 'education',
 }
