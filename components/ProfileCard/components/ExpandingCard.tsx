@@ -2,9 +2,9 @@
 import { Button } from '@/components/ui/button';
 import { ExpandingViewEnum, ExpandingViewProps } from '@/types/expandingView';
 import { XIcon } from 'lucide-react';
-import { CareerView } from './views/CareerView';
-import { EducationView } from './views/EducationView';
-import { ProjectView } from './views/ProjectView';
+import { CareerView } from '../views/CareerView';
+import { EducationView } from '../views/EducationView';
+import { ProjectView } from '../views/ProjectView';
 
 function renderView(view: ExpandingViewEnum | undefined) {
   switch (view) {
@@ -25,7 +25,7 @@ export function ExpandingCard({ isExpandingView, toggleExpand }: ExpandingViewPr
       <Button className="fixed top-6 right-6" variant="ghost" onClick={() => toggleExpand(ExpandingViewEnum.Default)}>
         <XIcon className="size-6" />
       </Button>
-      {renderView(isExpandingView)}
+      <div>{renderView(isExpandingView)}</div>
     </div>
   );
 }
