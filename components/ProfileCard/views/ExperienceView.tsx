@@ -1,15 +1,17 @@
-import { TimelineItem } from '../components/TimelineItem';
+import Image from 'next/image';
 
 const experienceList = [
   {
+    img_src: '',
     date: '2025.03 - 현재',
     title: '지상작전사령부',
-    description: `2급 기밀을 다루고 있어 자세한 업무에 대해선 언급할 수 없지만\n순발력과 책임감을 기르고 있으며 맡은 바 임무를 성실히 수행하고 있습니다.`,
+    description: `싸지방에서 코딩하는 사람이 있다?`,
   },
   {
+    img_src: '',
     date: '2023.01',
     title: '제 8회 하이톤(8th Highthon) - 프론트엔드 개발자',
-    description: `처음 참가한 해커톤을 통해 협업과 유지보수의 중요성을 깨달았습니다.\n더 나은 실무경험을 쌓기 위해 노력하고 있습니다.`,
+    description: `처음 참가해본 해커톤에서 얼탄 썰 푼다 ㅋㅋ`,
   },
 ];
 
@@ -17,11 +19,32 @@ export function ExperienceView() {
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-bold">경험</h1>
-      <ol className="flex flex-col gap-12 relative mx-2 py-8 border-s border-gray-200 dark:border-gray-700">
+
+      <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(480px,1fr))]">
         {experienceList.map((experience) => (
-          <TimelineItem key={experience.date} {...experience} />
+          <article
+            key={experience.title}
+            className="flex flex-col items-start gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-700 h-full"
+          >
+            {experience.img_src ? (
+              <Image
+                src={experience.img_src}
+                alt={experience.title}
+                className="w-full aspect-video object-cover rounded-md border"
+              />
+            ) : (
+              <div className="w-full aspect-video bg-gray-200 dark:bg-gray-700 border rounded-md" />
+            )}
+            <div className="w-full flex flex-col flex-1 ps-2">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{experience.description}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2 whitespace-pre-wrap">
+                {experience.title}
+              </p>
+              <p className="flex items-center gap-3 mt-3 text-sm text-gray-500 dark:text-gray-400">{experience.date}</p>
+            </div>
+          </article>
         ))}
-      </ol>
+      </div>
     </div>
   );
 }
