@@ -1,0 +1,33 @@
+'use client';
+
+import { AnimatePresence } from 'motion/react';
+import { usePathname } from 'next/navigation';
+import { createContext, ReactNode, useContext, useState } from 'react';
+
+interface TransitionContextType {
+  isReturning: boolean;
+  setIsReturning: (state: boolean) => void;
+}
+
+const TransitionContext = createContext<TransitionContextType | undefined>(undefined);
+
+export const TransitionProvider = ({ children }: { children: ReactNode }) => {
+  const [isReturning, setIsReturning] = useState(false);
+  const pathname = usePathname();
+
+  return (
+    <TransitionContext.Provider value={{ isReturning, setIsReturning }}>
+      <AnimatePresence mode="wait" initial={false}>
+        <div key={pathname}>{children}</div>
+      </AnimatePresence>
+    </TransitionContext.Provider>
+  );
+};
+
+export const useTransitionContext = () => {
+  const context = useContext(TransitionContext);
+  if (context === undefined) {
+    throw new Error('useTransitionContext는 TransitionProvider 내에서 사용되어야 합니다.');
+  }
+  return context;
+};
