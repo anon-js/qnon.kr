@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { TransitionProvider } from './context/TransitionContext';
 import './globals.css';
 
 const pretendard = localFont({
@@ -20,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${pretendard.className}`}>{children}</body>
+      <body className={`${pretendard.className}`}>
+        <TransitionProvider>{children}</TransitionProvider>
+      </body>
     </html>
   );
 }
