@@ -1,10 +1,10 @@
 'use client';
+import SubPageHeader from '@/components/SubPageHeader';
 import { TimelineItem } from '@/components/TimelineItem';
-import { Button } from '@/components/ui/button';
 import { fadeContainer } from '@/lib/openingVariants';
-import { ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
 import { useTransitionContext } from '../context/TransitionContext';
 
 const educationList = [
@@ -22,6 +22,7 @@ const educationList = [
 
 export default function EducationPage() {
   const router = useRouter();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { setIsReturning } = useTransitionContext();
 
   const handleGoBack = () => {
@@ -39,13 +40,9 @@ export default function EducationPage() {
       exit="exit"
       variants={fadeContainer}
       className="min-h-screen bg-white relative overflow-hidden p-4 md:p-8"
+      ref={scrollContainerRef}
     >
-      <div className="flex flex-row items-center gap-2">
-        <Button variant="ghost" onClick={handleGoBack}>
-          <ArrowLeft className="size-6" />
-        </Button>
-        <h1 className="text-2xl font-bold">학력</h1>
-      </div>
+      <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={handleGoBack} title="학력" />
       <motion.ol
         className="flex flex-col gap-12 relative ml-4 mt-8 py-8 border-s border-gray-200 dark:border-gray-700"
         variants={fadeContainer}
