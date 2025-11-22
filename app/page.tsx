@@ -8,31 +8,18 @@ import { ArrowUpRight, Mail } from 'lucide-react';
 import { cubicBezier, motion, Variants } from 'motion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
 
-const expandVariants: Variants = {
-  initial: {
-    width: 500,
-    height: 300,
-    borderRadius: 16,
-  },
-  expand: {
-    width: 3000,
-    height: 3000,
-    borderRadius: '0%',
-    transition: {
-      duration: 0.8,
-      ease: cubicBezier(0.83, 0, 0.17, 1),
-    },
-  },
-};
+// NOTE: expandVariants are computed inside component so it can
+// adapt to mobile/desktop breakpoints at runtime.
 
 export default function HomePage() {
   const router = useRouter();
   const { isReturning, setIsReturning } = useTransitionContext();
   const [targetRoute, setTargetRoute] = useState<string | null>(null);
   const [hasShrunk, setHasShrunk] = useState(!isReturning);
+  const [isMobile, setIsMobile] = useState(false);
 
   type ActionButtonListType = {
     label: string;
@@ -88,6 +75,36 @@ export default function HomePage() {
   }, [isReturning, hasShrunk, setIsReturning]);
 
   useEffect(() => {
+    // Detect mobile width below Tailwind md breakpoint (768px)
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const expandVariants: Variants = useMemo(
+    () => ({
+      initial: {
+        width: isMobile ? 320 : 702,
+        height: isMobile ? 640 : 394,
+        borderRadius: 16,
+      },
+      expand: {
+        width: isMobile ? 2000 : 3000,
+        height: isMobile ? 2000 : 3000,
+        borderRadius: '0%',
+        transition: {
+          duration: 0.8,
+          ease: cubicBezier(0.83, 0, 0.17, 1),
+        },
+      },
+    }),
+    [isMobile],
+  );
+
+  useEffect(() => {
     if (targetRoute) {
       router.push(targetRoute);
     }
@@ -124,7 +141,7 @@ export default function HomePage() {
         variants={expandVariants}
       >
         <div className="m-auto p-auto">
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-col md:flex-row items-center gap-4">
             <Avatar className="size-20 rounded-full border">
               <AvatarImage src="https://github.com/anon-js.png" alt="@anon-js" />
               <AvatarFallback>AJ</AvatarFallback>
@@ -134,18 +151,18 @@ export default function HomePage() {
               <p className="text-sm text-gray-600">프론트엔드 개발자</p>
             </div>
           </div>
-          <div className="flex flex-row flex-wrap md:flex-nowrap gap-4 items-center px-2">
-            <p className="text-md/6 text-gray-700 mt-2 break-keep">
+          <div className="flex flex-col md:flex-row gap-4 items-center md:items-start mt-4">
+            <p className="text-md/6 text-gray-700 pt-2 break-keep">
               어떤 기기에서든, 어떤 환경에서든
               <br />
               <strong>모두에게 동일한 경험을</strong> 제공하는 서비스를 만들고 싶습니다.
             </p>
-            <div className="flex flex-row md:flex-col items-between gap-2 flex-1 justify-between md:justify-end">
+            <div className="flex flex-row md:flex-col items-center gap-2 flex-1 justify-center md:justify-end">
               {ActionButtonList.map((button) => (
                 <Button
                   key={button.label}
                   variant="ghost"
-                  className="flex flex-row justify-start p-0!"
+                  className="flex flex-row justify-start pl-2! pr-3!"
                   onClick={() => handleClick(button.href)}
                   disabled={!!targetRoute || isReturning}
                 >
@@ -155,8 +172,8 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-          <div className="flex flex-row gap-2 px-2 items-center">
-            <p className="text-gray-700">Contact.</p>
+          <div className="flex flex-row gap-2 px-2 items-center justify-center md:justify-start">
+            <p className="text-gray-700 mr-4">Contact.</p>
             {ContactButtonList.map((button) => (
               <Button key={button.label} variant="link" size="sm" asChild>
                 <Link href={button.href} target="_blank" rel="noopener noreferrer">
