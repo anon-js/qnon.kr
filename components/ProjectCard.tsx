@@ -15,7 +15,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       variants={cardVariants}
       className="bg-white bg-opacity-90 p-6 rounded-xl shadow-2xl transition duration-300 hover:scale-[1.02] cursor-pointer border-t-4 border-indigo-600"
     >
-      <Link href={project.link}>
+      <Link href={project.title}>
         <h3 className="text-2xl font-bold text-gray-900 mb-2">{project.title}</h3>
         <p className="text-gray-600 mb-4 h-12 overflow-hidden">{project.description}</p>
 
