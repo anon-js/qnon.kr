@@ -65,16 +65,6 @@ export default function HomePage() {
   ];
 
   useEffect(() => {
-    if (isReturning && !hasShrunk) {
-      const timer = setTimeout(() => {
-        setIsReturning(false);
-        setHasShrunk(true);
-      }, 1200);
-      return () => clearTimeout(timer);
-    }
-  }, [isReturning, hasShrunk, setIsReturning]);
-
-  useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const handleResize = () => {
@@ -102,18 +92,13 @@ export default function HomePage() {
         height: viewportHeight,
         borderRadius: 0,
         transition: {
+          duration: 0.8,
           ease: cubicBezier(0.83, 0, 0.17, 1),
         },
       },
     }),
     [isMobile, isRotate, viewportWidth, viewportHeight],
   );
-
-  useEffect(() => {
-    if (targetRoute) {
-      router.push(targetRoute);
-    }
-  }, [targetRoute, router]);
 
   const handleClick = (href: string) => {
     setTargetRoute(href);
@@ -135,14 +120,20 @@ export default function HomePage() {
         duration: 0.8,
         ease: cubicBezier(0.83, 0, 0.17, 1),
       }}
+      onAnimationComplete={() => {
+        if (targetRoute) {
+          router.push(targetRoute);
+        }
+
+        if (isReturning && !hasShrunk) {
+          setIsReturning(false);
+          setHasShrunk(true);
+        }
+      }}
       className="flex items-center justify-center min-h-screen bg-gray-100 relative overflow-hidden"
     >
       <motion.div
-        className="h-full flex flex-col p-4 md:p-8 justify-between bg-white z-10"
-        style={{
-          top: '50%',
-          left: '50%',
-        }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full flex flex-col p-4 md:p-8 justify-between bg-white z-10"
         variants={expandVariants}
       >
         <div
