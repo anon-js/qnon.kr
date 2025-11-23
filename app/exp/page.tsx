@@ -1,11 +1,11 @@
 'use client';
-import { Button } from '@/components/ui/button';
+import SubPageHeader from '@/components/SubPageHeader';
 import { fadeContainer } from '@/lib/openingVariants';
 import { IconPhotoSearch } from '@tabler/icons-react';
-import { ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
 import { useTransitionContext } from '../context/TransitionContext';
 
 const experienceList = [
@@ -25,6 +25,7 @@ const experienceList = [
 
 export default function ExperiencePage() {
   const router = useRouter();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { setIsReturning } = useTransitionContext();
 
   const handleGoBack = () => {
@@ -41,15 +42,10 @@ export default function ExperiencePage() {
       animate="visible"
       exit="exit"
       variants={fadeContainer}
-      className="min-h-screen bg-white relative overflow-hidden p-4 md:p-8"
+      className="min-h-screen bg-white relative overflow-hidden px-4 py-6"
+      ref={scrollContainerRef}
     >
-      <div className="flex flex-row items-center gap-2">
-        <Button variant="ghost" onClick={handleGoBack}>
-          <ArrowLeft className="size-6" />
-        </Button>
-        <h1 className="text-2xl font-bold">경험</h1>
-      </div>
-
+      <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={handleGoBack} title="경험" />
       <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(480px,1fr))] mt-4">
         {experienceList.map((experience) => (
           <article
