@@ -17,6 +17,7 @@ export default function HomePage() {
   const [targetRoute, setTargetRoute] = useState<string | null>(null);
   const [hasShrunk, setHasShrunk] = useState(!isReturning);
   const [isMobile, setIsMobile] = useState(false);
+  const [isRotate, setIsRotate] = useState(false);
 
   type ActionButtonListType = {
     label: string;
@@ -73,7 +74,10 @@ export default function HomePage() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setIsRotate(mobile && window.innerWidth > window.innerHeight);
+      console.log(`isMobile: ${mobile}, isRotate: ${mobile && window.innerWidth > window.innerHeight}`);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -83,8 +87,8 @@ export default function HomePage() {
   const expandVariants: Variants = useMemo(
     () => ({
       initial: {
-        width: isMobile ? 320 : 720,
-        height: isMobile ? 540 : 400,
+        width: isMobile ? (isRotate ? 540 : 320) : 720,
+        height: isMobile ? (isRotate ? 320 : 540) : 400,
         borderRadius: 16,
       },
       expand: {
@@ -97,7 +101,7 @@ export default function HomePage() {
         },
       },
     }),
-    [isMobile],
+    [isMobile, isRotate],
   );
 
   useEffect(() => {
@@ -126,7 +130,7 @@ export default function HomePage() {
         duration: 0.8,
         ease: cubicBezier(0.83, 0, 0.17, 1),
       }}
-      className="flex items-center justify-center min-h-screen  bg-gray-100 relative overflow-hidden"
+      className="flex items-center justify-center min-h-screen bg-gray-100 relative overflow-hidden"
     >
       <motion.div
         className="h-full flex flex-col p-4 md:p-8 justify-between bg-white z-10"
@@ -136,9 +140,15 @@ export default function HomePage() {
         }}
         variants={expandVariants}
       >
-        <div className="h-[540px] md:h-[400px] flex flex-col justify-between my-auto">
-          <div className="h-full flex flex-col md:flex-row gap-4 items-center justify-center md:justify-between">
-            <div className="flex flex-col justify-center gap-4">
+        <div
+          className={`
+            ${isRotate ? 'w-[calc(540px-2rem)] h-[calc(320px-2rem)]' : 'w-[calc(320px-2rem)] h-[calc(540px-2rem)]'}
+            md:w-[calc(720px-4rem)] md:h-[calc(400px-4rem)]
+            flex flex-col justify-between m-auto p-auto
+          `}
+        >
+          <div className="flex flex-1 flex-col md:flex-row gap-4 items-center justify-center md:justify-between">
+            <div className="w-full flex flex-col justify-center gap-4">
               <div className="flex flex-row items-center gap-4">
                 <Avatar className="size-20 rounded-full border">
                   <AvatarImage src="https://github.com/anon-js.png" alt="@anon-js" />
@@ -172,7 +182,7 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col gap-2">
             <hr />
-            <div className="flex flex-row gap-2 mt-2 px-2 items-center justify-between">
+            <div className="flex flex-row gap-2 px-2 items-center justify-between">
               <p className="text-gray-700 mr-4">Contact.</p>
               <div className="flex flex-row gap-2 items-center">
                 {ContactButtonList.map((button) => (
