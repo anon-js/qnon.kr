@@ -1,8 +1,11 @@
 'use client';
 
-import { AnimatePresence } from 'motion/react';
+import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import { createContext, ReactNode, useContext, useState } from 'react';
+
+// AnimatePresence imports browser globals; load it only on the client.
+const AnimatePresence = dynamic(() => import('motion/react').then((m) => m.AnimatePresence), { ssr: false });
 
 interface TransitionContextType {
   isReturning: boolean;

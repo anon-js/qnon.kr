@@ -15,9 +15,11 @@ export default function HomePage() {
   const router = useRouter();
   const { isReturning, setIsReturning } = useTransitionContext();
   const [targetRoute, setTargetRoute] = useState<string | null>(null);
-  const [hasShrunk, setHasShrunk] = useState(!isReturning);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isRotate, setIsRotate] = useState(false);
+  const [hasShrunk, setHasShrunk] = useState<boolean>(!isReturning);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isRotate, setIsRotate] = useState<boolean>(false);
+  const [viewportWidth, setViewportWidth] = useState<number>(0);
+  const [viewportHeight, setViewportHeight] = useState<number>(0);
 
   type ActionButtonListType = {
     label: string;
@@ -73,12 +75,16 @@ export default function HomePage() {
   }, [isReturning, hasShrunk, setIsReturning]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
       setIsRotate(mobile && window.innerWidth > window.innerHeight);
-      console.log(`isMobile: ${mobile}, isRotate: ${mobile && window.innerWidth > window.innerHeight}`);
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
     };
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -92,16 +98,15 @@ export default function HomePage() {
         borderRadius: 16,
       },
       expand: {
-        width: isMobile ? 768 : 3000,
-        height: 3000,
+        width: viewportWidth,
+        height: viewportHeight,
         borderRadius: 0,
         transition: {
-          duration: 0.8,
           ease: cubicBezier(0.83, 0, 0.17, 1),
         },
       },
     }),
-    [isMobile, isRotate],
+    [isMobile, isRotate, viewportWidth, viewportHeight],
   );
 
   useEffect(() => {
