@@ -18,6 +18,8 @@ export default function HomePage() {
   const [hasShrunk, setHasShrunk] = useState(!isReturning);
   const [isMobile, setIsMobile] = useState(false);
   const [isRotate, setIsRotate] = useState(false);
+  const [vw, setVw] = useState(0);
+  const [vh, setVh] = useState(0);
 
   type ActionButtonListType = {
     label: string;
@@ -77,7 +79,8 @@ export default function HomePage() {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
       setIsRotate(mobile && window.innerWidth > window.innerHeight);
-      console.log(`isMobile: ${mobile}, isRotate: ${mobile && window.innerWidth > window.innerHeight}`);
+      setVw(window.innerWidth);
+      setVh(window.innerHeight);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -92,16 +95,15 @@ export default function HomePage() {
         borderRadius: 16,
       },
       expand: {
-        width: isMobile ? 768 : 3000,
-        height: 3000,
+        width: vw || window.innerWidth,
+        height: vh || window.innerHeight,
         borderRadius: 0,
         transition: {
-          duration: 0.8,
           ease: cubicBezier(0.83, 0, 0.17, 1),
         },
       },
     }),
-    [isMobile, isRotate],
+    [isMobile, isRotate, vw, vh],
   );
 
   useEffect(() => {
