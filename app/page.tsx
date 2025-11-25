@@ -1,84 +1,22 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { ExpandingViewEnum } from '@/types/expandingView';
-import { IconBrandGithub } from '@tabler/icons-react';
-import { ArrowUpRight, Mail } from 'lucide-react';
+import ActionButtons from '@/components/Home/ActionButtons';
+import ContactButtons from '@/components/Home/ContactButtons';
+import ProfileBlock from '@/components/Home/ProfileBlock';
+import { useViewport } from '@/lib/useViewport';
 import { cubicBezier, motion, Variants } from 'motion/react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
 
 export default function HomePage() {
   const router = useRouter();
   const { isReturning, setIsReturning } = useTransitionContext();
+
   const [targetRoute, setTargetRoute] = useState<string | null>(null);
   const [hasShrunk, setHasShrunk] = useState<boolean>(!isReturning);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [isRotate, setIsRotate] = useState<boolean>(false);
-  const [viewportWidth, setViewportWidth] = useState<number>(0);
-  const [viewportHeight, setViewportHeight] = useState<number>(0);
 
-  type ActionButtonListType = {
-    label: string;
-    view: ExpandingViewEnum;
-    href: string;
-  };
-
-  type ContactButtonListType = {
-    label: string;
-    href: string;
-    icon: React.ElementType;
-  };
-
-  const ActionButtonList: ActionButtonListType[] = [
-    {
-      label: '프로젝트',
-      view: ExpandingViewEnum.Project,
-      href: '/project',
-    },
-    {
-      label: '학력',
-      view: ExpandingViewEnum.Education,
-      href: '/edu',
-    },
-    {
-      label: '경험',
-      view: ExpandingViewEnum.Experience,
-      href: '/exp',
-    },
-  ];
-
-  const ContactButtonList: ContactButtonListType[] = [
-    {
-      label: 'Mail',
-      href: 'mailto:anon@qnon.kr',
-      icon: Mail,
-    },
-    {
-      label: 'Github',
-      href: 'https://github.com/anon-js',
-      icon: IconBrandGithub,
-    },
-  ];
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      setIsRotate(mobile && window.innerWidth > window.innerHeight);
-      setViewportWidth(window.innerWidth);
-      setViewportHeight(window.innerHeight);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const { isMobile, isRotate, width: viewportWidth, height: viewportHeight } = useViewport();
 
   const expandVariants: Variants = useMemo(
     () => ({
@@ -86,6 +24,11 @@ export default function HomePage() {
         width: isMobile ? (isRotate ? 540 : 320) : 720,
         height: isMobile ? (isRotate ? 320 : 540) : 400,
         borderRadius: 16,
+        transition: {
+          // faster, snappier shrink
+          duration: 0.45,
+          ease: cubicBezier(0.4, 0, 0.2, 1),
+        },
       },
       expand: {
         width: viewportWidth,
@@ -100,30 +43,19 @@ export default function HomePage() {
     [isMobile, isRotate, viewportWidth, viewportHeight],
   );
 
-  const handleClick = (href: string) => {
-    setTargetRoute(href);
-  };
+  const handleClick = (href: string) => setTargetRoute(href);
 
   let animationTarget = 'initial';
-  if (targetRoute) {
-    animationTarget = 'expand';
-  } else if (isReturning && !hasShrunk) {
-    animationTarget = 'initial';
-  }
+  if (targetRoute) animationTarget = 'expand';
+  else if (isReturning && !hasShrunk) animationTarget = 'initial';
 
   return (
     <motion.div
       exit="expand"
       animate={animationTarget}
       initial={isReturning ? 'expand' : 'initial'}
-      transition={{
-        duration: 0.8,
-        ease: cubicBezier(0.83, 0, 0.17, 1),
-      }}
       onAnimationComplete={() => {
-        if (targetRoute) {
-          router.push(targetRoute);
-        }
+        if (targetRoute) router.push(targetRoute);
 
         if (isReturning && !hasShrunk) {
           setIsReturning(false);
@@ -134,62 +66,22 @@ export default function HomePage() {
     >
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full flex flex-col p-4 md:p-8 justify-between bg-white z-10"
+        style={{ transformOrigin: 'center center' }}
         variants={expandVariants}
       >
         <div
-          className={`
-            ${isRotate ? 'w-[calc(540px-2rem)] h-[calc(320px-2rem)]' : 'w-[calc(320px-2rem)] h-[calc(540px-2rem)]'}
-            md:w-[calc(720px-4rem)] md:h-[calc(400px-4rem)]
-            flex flex-col justify-between m-auto p-auto
-          `}
+          className={`${isRotate ? 'w-[calc(540px-2rem)] h-[calc(320px-2rem)]' : 'w-[calc(320px-2rem)] h-[calc(540px-2rem)]'} md:w-[calc(720px-4rem)] md:h-[calc(400px-4rem)] flex flex-col justify-between m-auto p-auto`}
         >
           <div className="flex flex-1 flex-col md:flex-row gap-4 items-center justify-center md:justify-between">
-            <div className="w-full flex flex-col justify-center gap-4">
-              <div className="flex flex-row items-center gap-4">
-                <Avatar className="size-20 rounded-full border">
-                  <AvatarImage src="https://github.com/anon-js.png" alt="@anon-js" />
-                  <AvatarFallback>AJ</AvatarFallback>
-                </Avatar>
-                <div>
-                  <h1 className="text-2xl font-semibold">anon</h1>
-                  <p className="text-sm text-gray-600">프론트엔드 개발자</p>
-                </div>
-              </div>
-              <p className="flex-1 text-md/6 text-gray-700 break-keep items-baseline pl-2">
-                어떤 기기에서든, 어떤 환경에서든
-                <br />
-                <strong>모두에게 동일한 경험을</strong> 제공하는 서비스를 만들고 싶습니다.
-              </p>
-            </div>
-            <div className="max-md:w-full flex flex-row md:flex-col gap-2 items-center md:items-stretch">
-              {ActionButtonList.map((button) => (
-                <Button
-                  key={button.label}
-                  variant="ghost"
-                  className="flex flex-1 flex-row justify-between md:justify-start pl-2! pr-3! text-gray-600 hover:text-gray-900"
-                  onClick={() => handleClick(button.href)}
-                  disabled={!!targetRoute || isReturning}
-                >
-                  <ArrowUpRight className="size-4 stroke-gray-600 stroke-2" />
-                  {button.label}
-                </Button>
-              ))}
-            </div>
+            <ProfileBlock />
+            <ActionButtons disabled={!!targetRoute || isReturning} onNavigate={handleClick} />
           </div>
+
           <div className="flex flex-col gap-2">
             <hr />
             <div className="flex flex-row gap-2 px-2 items-center justify-between">
               <p className="text-gray-700 mr-4">Contact.</p>
-              <div className="flex flex-row gap-2 items-center">
-                {ContactButtonList.map((button) => (
-                  <Button key={button.label} variant="link" size="sm" asChild>
-                    <Link href={button.href} target="_blank" rel="noopener noreferrer">
-                      <button.icon />
-                      {button.label}
-                    </Link>
-                  </Button>
-                ))}
-              </div>
+              <ContactButtons />
             </div>
           </div>
         </div>

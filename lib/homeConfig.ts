@@ -1,0 +1,20 @@
+import { IconBrandGithub } from '@tabler/icons-react';
+import { Mail } from 'lucide-react';
+import type { ElementType } from 'react';
+
+export type ButtonListType = {
+  label: string;
+  href: string;
+  icon?: ElementType;
+};
+
+export const ACTIONS: ButtonListType[] = [
+  { label: '프로젝트', href: '/project' },
+  { label: '학력', href: '/edu' },
+  { label: '경험', href: '/exp' },
+];
+
+export const CONTACTS: ButtonListType[] = [
+  { label: 'Mail', href: 'mailto:anon@qnon.kr', icon: Mail },
+  { label: 'Github', href: 'https://github.com/anon-js', icon: IconBrandGithub },
+];

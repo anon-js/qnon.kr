@@ -1,7 +1,7 @@
 'use client';
+import { Project } from '@/@types/project';
 import SubPageHeader from '@/components/SubPageHeader';
 import { fadeContainer } from '@/lib/openingVariants';
-import { Project } from '@/types/project';
 import { Folder } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
