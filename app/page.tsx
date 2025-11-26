@@ -25,16 +25,16 @@ export default function HomePage() {
         height: isMobile ? (isRotate ? MOBILE.LANDSCAPE.h : MOBILE.PORTRAIT.h) : DESKTOP.h,
         borderRadius: 16,
         transition: {
-          duration: 0.45,
+          duration: 0.2,
           ease: 'easeInOut',
         },
       },
       expand: {
         width: '100vw',
-        height: '100vh',
+        height: '100dvh',
         borderRadius: 0,
         transition: {
-          duration: 0.8,
+          duration: 0.4,
           ease: 'easeInOut',
         },
       },
@@ -50,26 +50,25 @@ export default function HomePage() {
 
   return (
     <motion.div
-      exit="expand"
+      exit={'expand'}
       initial={isReturning ? 'expand' : 'initial'}
       animate={animationTarget}
-      onAnimationComplete={() => {
-        if (targetRoute) router.push(targetRoute);
-
-        if (isReturning && !hasShrunk) {
-          setIsReturning(false);
-          setHasShrunk(true);
-        }
-      }}
-      className="flex items-center justify-center min-w-screen min-h-screen bg-gray-100 relative overflow-hidden"
+      className="flex items-center justify-center w-full min-h-screen bg-gray-100 relative overflow-hidden"
     >
       <motion.div
         className="absolute flex flex-col items-center justify-center bg-white z-10 overflow-hidden"
         variants={expandVariants}
         style={{
           willChange: 'width, height',
-          backfaceVisibility: 'hidden',
           transform: 'translateZ(0)',
+        }}
+        onAnimationComplete={() => {
+          if (targetRoute) router.push(targetRoute);
+
+          if (isReturning && !hasShrunk) {
+            setIsReturning(false);
+            setHasShrunk(true);
+          }
         }}
       >
         <HomeCardContent
