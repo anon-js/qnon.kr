@@ -16,14 +16,20 @@ interface HomeCardContentProps {
 export default function HomeCardContent({ isRotate, targetRoute, isReturning, onNavigate }: HomeCardContentProps) {
   const { MOBILE, DESKTOP } = CARD_DIMENSIONS;
 
+  const dynamicStyles = {
+    '--mobile-w': isRotate ? `${MOBILE.LANDSCAPE.w}px` : `${MOBILE.PORTRAIT.w}px`,
+    '--mobile-h': isRotate ? `${MOBILE.LANDSCAPE.h}px` : `${MOBILE.PORTRAIT.h}px`,
+    '--desktop-w': `${DESKTOP.w}px`,
+    '--desktop-h': `${DESKTOP.h}px`,
+  } as React.CSSProperties;
+
   return (
     <div
+      style={dynamicStyles}
       className={cn(
         'flex flex-col justify-between flex-shrink-0 m-4 md:m-8',
-        isRotate
-          ? `w-[calc(${MOBILE.LANDSCAPE.w}px-2rem)] h-[calc(${MOBILE.LANDSCAPE.h}px-2rem)]`
-          : `w-[calc(${MOBILE.PORTRAIT.w}px-2rem)] h-[calc(${MOBILE.PORTRAIT.h}px-2rem)]`,
-        `md:w-[calc(${DESKTOP.w}px-4rem)] md:h-[calc(${DESKTOP.h}px-4rem)]`,
+        'w-[calc(var(--mobile-w)-2rem)] h-[calc(var(--mobile-h)-2rem)]',
+        'md:w-[calc(var(--desktop-w)-4rem)] md:h-[calc(var(--desktop-h)-4rem)]',
       )}
     >
       <div className="flex flex-1 flex-col md:flex-row gap-4 items-center justify-center md:justify-between">
