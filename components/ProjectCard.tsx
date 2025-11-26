@@ -1,6 +1,6 @@
 'use client';
 
-import { Project } from '@/types/project';
+import { Project } from '@/@types/project';
 import { motion, Variants } from 'motion/react';
 import Link from 'next/link';
 

@@ -18,7 +18,9 @@ export const TransitionProvider = ({ children }: { children: ReactNode }) => {
   return (
     <TransitionContext.Provider value={{ isReturning, setIsReturning }}>
       <AnimatePresence mode="wait" initial={false}>
-        <div key={pathname}>{children}</div>
+        <div key={pathname} className="w-full h-full flex flex-col">
+          {children}
+        </div>
       </AnimatePresence>
     </TransitionContext.Provider>
   );

@@ -1,207 +1,83 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { ExpandingViewEnum } from '@/types/expandingView';
-import { IconBrandGithub } from '@tabler/icons-react';
-import { ArrowUpRight, Mail } from 'lucide-react';
-import { cubicBezier, motion, Variants } from 'motion/react';
-import Link from 'next/link';
+import HomeCardContent from '@/components/Home/HomeCardContent';
+import { CARD_DIMENSIONS } from '@/lib/homeConfig';
+import { useViewport } from '@/lib/useViewport';
+import { motion, Variants } from 'motion/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
 
 export default function HomePage() {
   const router = useRouter();
   const { isReturning, setIsReturning } = useTransitionContext();
+
   const [targetRoute, setTargetRoute] = useState<string | null>(null);
   const [hasShrunk, setHasShrunk] = useState<boolean>(!isReturning);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [isRotate, setIsRotate] = useState<boolean>(false);
-  const [viewportWidth, setViewportWidth] = useState<number>(0);
-  const [viewportHeight, setViewportHeight] = useState<number>(0);
 
-  type ActionButtonListType = {
-    label: string;
-    view: ExpandingViewEnum;
-    href: string;
-  };
-
-  type ContactButtonListType = {
-    label: string;
-    href: string;
-    icon: React.ElementType;
-  };
-
-  const ActionButtonList: ActionButtonListType[] = [
-    {
-      label: '프로젝트',
-      view: ExpandingViewEnum.Project,
-      href: '/project',
-    },
-    {
-      label: '학력',
-      view: ExpandingViewEnum.Education,
-      href: '/edu',
-    },
-    {
-      label: '경험',
-      view: ExpandingViewEnum.Experience,
-      href: '/exp',
-    },
-  ];
-
-  const ContactButtonList: ContactButtonListType[] = [
-    {
-      label: 'Mail',
-      href: 'mailto:anon@qnon.kr',
-      icon: Mail,
-    },
-    {
-      label: 'Github',
-      href: 'https://github.com/anon-js',
-      icon: IconBrandGithub,
-    },
-  ];
-
-  useEffect(() => {
-    if (isReturning && !hasShrunk) {
-      const timer = setTimeout(() => {
-        setIsReturning(false);
-        setHasShrunk(true);
-      }, 1200);
-      return () => clearTimeout(timer);
-    }
-  }, [isReturning, hasShrunk, setIsReturning]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      setIsRotate(mobile && window.innerWidth > window.innerHeight);
-      setViewportWidth(window.innerWidth);
-      setViewportHeight(window.innerHeight);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const { isMobile, isRotate } = useViewport();
+  const { MOBILE, DESKTOP } = CARD_DIMENSIONS;
 
   const expandVariants: Variants = useMemo(
     () => ({
       initial: {
-        width: isMobile ? (isRotate ? 540 : 320) : 720,
-        height: isMobile ? (isRotate ? 320 : 540) : 400,
+        width: isMobile ? (isRotate ? MOBILE.LANDSCAPE.w : MOBILE.PORTRAIT.w) : DESKTOP.w,
+        height: isMobile ? (isRotate ? MOBILE.LANDSCAPE.h : MOBILE.PORTRAIT.h) : DESKTOP.h,
         borderRadius: 16,
+        transition: {
+          duration: 0.45,
+          ease: 'easeInOut',
+        },
       },
       expand: {
-        width: viewportWidth,
-        height: viewportHeight,
+        width: '100vw',
+        height: '100vh',
         borderRadius: 0,
         transition: {
-          ease: cubicBezier(0.83, 0, 0.17, 1),
+          duration: 0.8,
+          ease: 'easeInOut',
         },
       },
     }),
-    [isMobile, isRotate, viewportWidth, viewportHeight],
+    [isMobile, isRotate, MOBILE, DESKTOP],
   );
 
-  useEffect(() => {
-    if (targetRoute) {
-      router.push(targetRoute);
-    }
-  }, [targetRoute, router]);
-
-  const handleClick = (href: string) => {
-    setTargetRoute(href);
-  };
+  const handleClick = (href: string) => setTargetRoute(href);
 
   let animationTarget = 'initial';
-  if (targetRoute) {
-    animationTarget = 'expand';
-  } else if (isReturning && !hasShrunk) {
-    animationTarget = 'initial';
-  }
+  if (targetRoute) animationTarget = 'expand';
+  else if (isReturning && !hasShrunk) animationTarget = 'initial';
 
   return (
     <motion.div
       exit="expand"
-      animate={animationTarget}
       initial={isReturning ? 'expand' : 'initial'}
-      transition={{
-        duration: 0.8,
-        ease: cubicBezier(0.83, 0, 0.17, 1),
+      animate={animationTarget}
+      onAnimationComplete={() => {
+        if (targetRoute) router.push(targetRoute);
+
+        if (isReturning && !hasShrunk) {
+          setIsReturning(false);
+          setHasShrunk(true);
+        }
       }}
-      className="flex items-center justify-center min-h-screen bg-gray-100 relative overflow-hidden"
+      className="flex items-center justify-center min-w-screen min-h-screen bg-gray-100 relative overflow-hidden"
     >
       <motion.div
-        className="h-full flex flex-col p-4 md:p-8 justify-between bg-white z-10"
-        style={{
-          top: '50%',
-          left: '50%',
-        }}
+        className="absolute flex flex-col items-center justify-center bg-white z-10 overflow-hidden"
         variants={expandVariants}
+        style={{
+          willChange: 'width, height',
+          backfaceVisibility: 'hidden',
+          transform: 'translateZ(0)',
+        }}
       >
-        <div
-          className={`
-            ${isRotate ? 'w-[calc(540px-2rem)] h-[calc(320px-2rem)]' : 'w-[calc(320px-2rem)] h-[calc(540px-2rem)]'}
-            md:w-[calc(720px-4rem)] md:h-[calc(400px-4rem)]
-            flex flex-col justify-between m-auto p-auto
-          `}
-        >
-          <div className="flex flex-1 flex-col md:flex-row gap-4 items-center justify-center md:justify-between">
-            <div className="w-full flex flex-col justify-center gap-4">
-              <div className="flex flex-row items-center gap-4">
-                <Avatar className="size-20 rounded-full border">
-                  <AvatarImage src="https://github.com/anon-js.png" alt="@anon-js" />
-                  <AvatarFallback>AJ</AvatarFallback>
-                </Avatar>
-                <div>
-                  <h1 className="text-2xl font-semibold">anon</h1>
-                  <p className="text-sm text-gray-600">프론트엔드 개발자</p>
-                </div>
-              </div>
-              <p className="flex-1 text-md/6 text-gray-700 break-keep items-baseline pl-2">
-                어떤 기기에서든, 어떤 환경에서든
-                <br />
-                <strong>모두에게 동일한 경험을</strong> 제공하는 서비스를 만들고 싶습니다.
-              </p>
-            </div>
-            <div className="max-md:w-full flex flex-row md:flex-col gap-2 items-center md:items-stretch">
-              {ActionButtonList.map((button) => (
-                <Button
-                  key={button.label}
-                  variant="ghost"
-                  className="flex flex-1 flex-row justify-between md:justify-start pl-2! pr-3! text-gray-600 hover:text-gray-900"
-                  onClick={() => handleClick(button.href)}
-                  disabled={!!targetRoute || isReturning}
-                >
-                  <ArrowUpRight className="size-4 stroke-gray-600 stroke-2" />
-                  {button.label}
-                </Button>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <hr />
-            <div className="flex flex-row gap-2 px-2 items-center justify-between">
-              <p className="text-gray-700 mr-4">Contact.</p>
-              <div className="flex flex-row gap-2 items-center">
-                {ContactButtonList.map((button) => (
-                  <Button key={button.label} variant="link" size="sm" asChild>
-                    <Link href={button.href} target="_blank" rel="noopener noreferrer">
-                      <button.icon />
-                      {button.label}
-                    </Link>
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        <HomeCardContent
+          isRotate={isRotate}
+          targetRoute={targetRoute}
+          isReturning={isReturning}
+          onNavigate={handleClick}
+        />
       </motion.div>
     </motion.div>
   );
