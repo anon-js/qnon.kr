@@ -36,7 +36,7 @@ export default function SubPageHeader({ scrollContainerRef, handleGoBack, title 
 
   return (
     <div
-      className={`flex flex-row items-center gap-2 p-2 fixed backdrop-blur-md rounded-lg z-10 left-4 right-4 border transition-colors bg-white/70 ${
+      className={`flex flex-row items-center gap-2 py-2 fixed backdrop-blur-md rounded-lg z-10 left-4 right-4 border transition-colors bg-white/70 ${
         isScrolled ? 'border-gray-200 dark:border-gray-700' : 'border-transparent'
       }`}
     >
