@@ -12,6 +12,10 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: 'anon',
   description: "anon's portfolio website",
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

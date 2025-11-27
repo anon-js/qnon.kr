@@ -1,11 +1,8 @@
 'use client';
-import SubPageHeader from '@/components/SubPageHeader';
+import { SubPageContainer } from '@/components/SubPageContainer';
 import { TimelineItem } from '@/components/TimelineItem';
 import { fadeContainer } from '@/lib/openingVariants';
 import { motion } from 'motion/react';
-import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
-import { useTransitionContext } from '../context/TransitionContext';
 
 const educationList = [
   {
@@ -21,28 +18,8 @@ const educationList = [
 ];
 
 export default function EducationPage() {
-  const router = useRouter();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const { setIsReturning } = useTransitionContext();
-
-  const handleGoBack = () => {
-    setIsReturning(true);
-
-    setTimeout(() => {
-      router.push('/');
-    }, 0);
-  };
-
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      variants={fadeContainer}
-      className="min-h-screen bg-white relative overflow-hidden p-4 md:p-8"
-      ref={scrollContainerRef}
-    >
-      <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={handleGoBack} title="학력" />
+    <SubPageContainer title="학력">
       <motion.ol
         className="flex flex-col gap-12 relative ml-4 mt-8 py-8 border-s border-gray-200 dark:border-gray-700"
         variants={fadeContainer}
@@ -55,6 +32,6 @@ export default function EducationPage() {
           <TimelineItem key={education.title} {...education} />
         ))}
       </motion.ol>
-    </motion.div>
+    </SubPageContainer>
   );
 }

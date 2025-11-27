@@ -1,12 +1,7 @@
 'use client';
-import SubPageHeader from '@/components/SubPageHeader';
-import { fadeContainer } from '@/lib/openingVariants';
+import { SubPageContainer } from '@/components/SubPageContainer';
 import { IconPhotoSearch } from '@tabler/icons-react';
-import { motion } from 'motion/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
-import { useTransitionContext } from '../context/TransitionContext';
 
 const experienceList = [
   {
@@ -24,28 +19,8 @@ const experienceList = [
 ];
 
 export default function ExperiencePage() {
-  const router = useRouter();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const { setIsReturning } = useTransitionContext();
-
-  const handleGoBack = () => {
-    setIsReturning(true);
-
-    setTimeout(() => {
-      router.push('/');
-    }, 0);
-  };
-
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      variants={fadeContainer}
-      className="min-h-screen bg-white relative overflow-hidden px-4 py-6"
-      ref={scrollContainerRef}
-    >
-      <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={handleGoBack} title="경험" />
+    <SubPageContainer title="경험">
       <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(480px,1fr))] mt-4">
         {experienceList.map((experience) => (
           <article
@@ -76,6 +51,6 @@ export default function ExperiencePage() {
           </article>
         ))}
       </div>
-    </motion.div>
+    </SubPageContainer>
   );
 }

@@ -1,13 +1,8 @@
 'use client';
 import { Project } from '@/@types/project';
-import SubPageHeader from '@/components/SubPageHeader';
-import { fadeContainer } from '@/lib/openingVariants';
+import { SubPageContainer } from '@/components/SubPageContainer';
 import { Folder } from 'lucide-react';
-import { motion } from 'motion/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
-import { useTransitionContext } from '../context/TransitionContext';
 
 const projectsData: Project[] = [
   {
@@ -22,38 +17,12 @@ const projectsData: Project[] = [
     description: 'Flutter로 개발된 학습 관리 앱으로, 사용자가 학습 계획을 세우고 진행 상황을 추적할 수 있습니다.',
     tags: ['Flutter'],
   },
-].concat(
-  Array.from({ length: 98 }, (_, i) => ({
-    id: i + 3,
-    title: `Sample Project ${i + 3}`,
-    description: 'This is a sample project description.',
-    tags: ['Sample', 'Project'],
-  })),
-);
+];
 
 export default function ProjectPage() {
-  const router = useRouter();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const { setIsReturning } = useTransitionContext();
-
-  const handleGoBack = () => {
-    setIsReturning(true);
-
-    setTimeout(() => {
-      router.push('/');
-    }, 0);
-  };
-
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      variants={fadeContainer}
-      className="min-h-screen bg-white relative overflow-hidden px-4 py-6"
-    >
-      <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={handleGoBack} title="프로젝트" />
-      <div className="mt-14 overflow-y-auto" ref={scrollContainerRef}>
+    <SubPageContainer title="프로젝트">
+      <div className="mt-14">
         <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(100px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(120px,1fr))] pr-2">
           {projectsData.map((project) => (
             <Link
@@ -67,6 +36,6 @@ export default function ProjectPage() {
           ))}
         </div>
       </div>
-    </motion.div>
+    </SubPageContainer>
   );
 }
