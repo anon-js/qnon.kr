@@ -1,3 +1,5 @@
+'use client';
+
 import { useTransitionContext } from '@/app/context/TransitionContext';
 import { fadeContainer } from '@/lib/openingVariants';
 import { motion } from 'motion/react';
@@ -7,19 +9,20 @@ import SubPageHeader from './SubPageHeader';
 
 interface SubPageContainerProps {
   title: string;
+  link?: string;
   children: React.ReactNode;
 }
 
-export const SubPageContainer = ({ title, children }: SubPageContainerProps) => {
+export const SubPageContainer = ({ title, link, children }: SubPageContainerProps) => {
   const router = useRouter();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { setIsReturning } = useTransitionContext();
 
-  const handleGoBack = () => {
+  const handleGoBack = (link?: string) => {
     setIsReturning(true);
 
     setTimeout(() => {
-      router.push('/');
+      router.push(link ?? '/');
     }, 0);
   };
 
@@ -29,11 +32,11 @@ export const SubPageContainer = ({ title, children }: SubPageContainerProps) => 
       animate="visible"
       exit="exit"
       variants={fadeContainer}
-      className="min-h-screen bg-white relative overflow-y-auto px-4 py-6"
+      className="flex flex-col flex-1 bg-white relative overflow-y-auto p-6"
       ref={scrollContainerRef}
     >
-      <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={handleGoBack} title={title} />
-      {children}
+      <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={() => handleGoBack(link)} title={title} />
+      <div className="flex flex-col flex-1 mt-16">{children}</div>
     </motion.div>
   );
 };
