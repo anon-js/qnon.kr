@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 export function useViewport() {
   const [isMobile, setIsMobile] = useState(false);
   const [isRotate, setIsRotate] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -13,6 +14,7 @@ export function useViewport() {
       const mobile = w < 768;
       setIsMobile(mobile);
       setIsRotate(mobile && w > h);
+      setIsLoaded(true);
     };
 
     update();
@@ -20,5 +22,5 @@ export function useViewport() {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  return { isMobile, isRotate } as const;
+  return { isMobile, isRotate, isLoaded } as const;
 }
