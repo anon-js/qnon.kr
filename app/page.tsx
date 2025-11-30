@@ -34,7 +34,7 @@ export default function HomePage() {
         height: 'var(--full-height)',
         borderRadius: 0,
         transition: {
-          duration: 0.4,
+          duration: 0.2,
           ease: 'easeInOut',
         },
       },
@@ -56,12 +56,8 @@ export default function HomePage() {
       className="flex items-center justify-center w-full min-h-screen bg-gray-100 relative overflow-hidden"
     >
       <motion.div
-        className="absolute flex flex-col items-center justify-center bg-white z-10 overflow-hidden"
+        className="absolute flex flex-col items-center justify-center bg-white z-10 overflow-hidden will-change-[width,height] transform-gpu"
         variants={expandVariants}
-        style={{
-          willChange: 'width, height',
-          transform: 'translateZ(0)',
-        }}
         onAnimationComplete={() => {
           if (targetRoute) router.push(targetRoute);
 
