@@ -1,9 +1,10 @@
 'use client';
 
 import HomeCardContent from '@/components/Home/HomeCardContent';
+import HomeSkeleton from '@/components/Home/HomeSkeleton';
 import { CARD_DIMENSIONS } from '@/lib/homeConfig';
 import { useViewport } from '@/lib/useViewport';
-import { cubicBezier, motion, Variants } from 'motion/react';
+import { motion, Variants } from 'motion/react';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
@@ -15,7 +16,7 @@ export default function HomePage() {
   const [targetRoute, setTargetRoute] = useState<string | null>(null);
   const [hasShrunk, setHasShrunk] = useState<boolean>(!isReturning);
 
-  const { isMobile, isRotate } = useViewport();
+  const { isMobile, isRotate, isLoaded } = useViewport();
   const { MOBILE, DESKTOP } = CARD_DIMENSIONS;
 
   const expandVariants: Variants = useMemo(
@@ -26,7 +27,7 @@ export default function HomePage() {
         borderRadius: 16,
         transition: {
           duration: 0.3,
-          ease: cubicBezier(0.862, 0.623, 0.132, 1),
+          ease: [0.862, 0.623, 0.132, 1],
         },
       },
       expand: {
@@ -35,7 +36,7 @@ export default function HomePage() {
         borderRadius: 0,
         transition: {
           duration: 0.3,
-          ease: cubicBezier(1, 0.132, 0.623, 0.862),
+          ease: [1, 0.132, 0.623, 0.862],
         },
       },
     }),
@@ -47,6 +48,16 @@ export default function HomePage() {
   let animationTarget = 'initial';
   if (targetRoute) animationTarget = 'expand';
   else if (isReturning && !hasShrunk) animationTarget = 'initial';
+
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center justify-center w-full min-h-screen bg-gray-100 relative overflow-hidden">
+        <div className="absolute flex flex-col items-center justify-center bg-white z-10 overflow-hidden w-[320px] h-[540px] md:w-[720px] md:h-[400px] rounded-lg">
+          <HomeSkeleton />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
