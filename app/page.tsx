@@ -3,7 +3,7 @@
 import HomeCardContent from '@/components/Home/HomeCardContent';
 import { CARD_DIMENSIONS } from '@/lib/homeConfig';
 import { useViewport } from '@/lib/useViewport';
-import { motion, Variants } from 'motion/react';
+import { cubicBezier, motion, Variants } from 'motion/react';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
@@ -25,8 +25,8 @@ export default function HomePage() {
         height: isMobile ? (isRotate ? MOBILE.LANDSCAPE.h : MOBILE.PORTRAIT.h) : DESKTOP.h,
         borderRadius: 16,
         transition: {
-          duration: 0.2,
-          ease: 'easeInOut',
+          duration: 0.3,
+          ease: cubicBezier(0.862, 0.623, 0.132, 1),
         },
       },
       expand: {
@@ -34,8 +34,8 @@ export default function HomePage() {
         height: 'var(--full-height)',
         borderRadius: 0,
         transition: {
-          duration: 0.2,
-          ease: 'easeInOut',
+          duration: 0.3,
+          ease: cubicBezier(1, 0.132, 0.623, 0.862),
         },
       },
     }),
