@@ -30,8 +30,8 @@ export default function HomePage() {
         },
       },
       expand: {
-        width: '100vw',
-        height: '100dvh',
+        width: 'var(--full-width)',
+        height: 'var(--full-height)',
         borderRadius: 0,
         transition: {
           duration: 0.4,
