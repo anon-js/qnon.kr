@@ -1,5 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import { ModeToggle } from './ModeToggle';
 import { Button } from './ui/button';
 
 interface SubPageHeaderProps {
@@ -35,15 +36,18 @@ export default function SubPageHeader({ scrollContainerRef, handleGoBack, title 
   }, [handleScroll, scrollContainerRef]);
 
   return (
-    <div
-      className={`flex flex-row items-center gap-2 py-2 fixed backdrop-blur-md rounded-lg z-10 left-4 right-4 border transition-colors bg-white/70 ${
-        isScrolled ? 'border-gray-200 dark:border-gray-700' : 'border-transparent'
+    <header
+      className={`flex flex-row items-center gap-2 py-2 fixed backdrop-blur-md rounded-lg z-10 left-4 right-4 border transition-colors bg-background/70 ${
+        isScrolled ? 'border-border' : 'border-transparent'
       }`}
     >
-      <Button variant="ghost" onClick={handleGoBack} className="px-2!" aria-label="뒤로가기 버튼">
+      <Button variant="ghost" onClick={handleGoBack} className="px-2!" aria-label="뒤로가기">
         <ArrowLeft className="size-6" />
       </Button>
       <h1 className="text-2xl font-bold">{title}</h1>
-    </div>
+      <div className="ml-auto pr-2">
+        <ModeToggle />
+      </div>
+    </header>
   );
 }

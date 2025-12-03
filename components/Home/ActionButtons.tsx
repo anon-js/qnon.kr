@@ -12,19 +12,20 @@ export default function ActionButtons({
   onNavigate: (href: string) => void;
 }) {
   return (
-    <div className="max-md:w-full flex flex-row md:flex-col gap-2 items-center md:items-stretch">
+    <nav className="max-md:w-full flex flex-row md:flex-col gap-2 items-center md:items-stretch">
       {ACTIONS.map((button: ButtonListType) => (
         <Button
           key={button.label}
-          variant="ghost"
-          className="flex flex-1 flex-row justify-between md:justify-start pl-2! pr-3! text-gray-600 hover:text-gray-900"
+          variant="default"
+          className="flex flex-1 flex-row justify-between pl-4 pr-4"
+          aria-label={button.label + ' 바로가기'}
           onClick={() => onNavigate(button.href)}
           disabled={disabled}
         >
-          <ArrowUpRight className="size-4 stroke-gray-600 stroke-2" />
           {button.label}
+          <ArrowUpRight className="size-4" />
         </Button>
       ))}
-    </div>
+    </nav>
   );
 }

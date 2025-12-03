@@ -7,18 +7,23 @@ import React from 'react';
 
 export default function ContactButtons() {
   return (
-    <div className="flex flex-row gap-2 items-center">
+    <address className="flex flex-row gap-1 items-center not-italic">
       {CONTACTS.map((button: ButtonListType) => {
         const Icon = button.icon as React.ElementType | undefined;
         return (
           <Button key={button.label} variant="link" size="sm" asChild>
-            <Link href={button.href} target="_blank" rel="noopener noreferrer">
+            <Link
+              href={button.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={button.label + '(으)로 연락하기'}
+            >
               {Icon && <Icon />}
               {button.label}
             </Link>
           </Button>
         );
       })}
-    </div>
+    </address>
   );
 }

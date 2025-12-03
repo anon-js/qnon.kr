@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@/components/ThemeProvider';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { TransitionProvider } from './context/TransitionContext';
@@ -17,16 +18,17 @@ export const metadata: Metadata = {
     follow: true,
   },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <body className={`${pretendard.className}`}>
-        <TransitionProvider>{children}</TransitionProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <TransitionProvider>{children}</TransitionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -27,16 +27,16 @@ export const SubPageContainer = ({ title, link, children }: SubPageContainerProp
   };
 
   return (
-    <motion.div
+    <motion.main
       initial="hidden"
       animate="visible"
       exit="exit"
       variants={fadeContainer}
-      className="flex flex-col flex-1 bg-white relative overflow-y-auto p-6"
+      className="flex flex-col flex-1 bg-background relative overflow-y-auto p-6"
       ref={scrollContainerRef}
     >
       <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={() => handleGoBack(link)} title={title} />
       <div className="flex flex-col flex-1 mt-16">{children}</div>
-    </motion.div>
+    </motion.main>
   );
 };

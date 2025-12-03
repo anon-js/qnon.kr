@@ -51,8 +51,8 @@ export default function HomePage() {
 
   if (!isLoaded) {
     return (
-      <div className="flex items-center justify-center w-full min-h-screen bg-gray-100 relative overflow-hidden">
-        <div className="absolute flex flex-col items-center justify-center bg-white z-10 overflow-hidden w-[320px] h-[540px] md:w-[720px] md:h-[400px] rounded-lg">
+      <div className="flex items-center justify-center w-full min-h-screen bg-muted relative overflow-hidden">
+        <div className="absolute flex flex-col items-center justify-center bg-card z-10 overflow-hidden w-[320px] h-[540px] md:w-[720px] md:h-[400px] rounded-lg">
           <HomeSkeleton />
         </div>
       </div>
@@ -64,10 +64,10 @@ export default function HomePage() {
       exit={'expand'}
       initial={isReturning ? 'expand' : 'initial'}
       animate={animationTarget}
-      className="flex items-center justify-center w-full min-h-screen bg-gray-100 relative overflow-hidden"
+      className="flex items-center justify-center w-full min-h-screen bg-muted relative overflow-hidden"
     >
       <motion.div
-        className="absolute flex flex-col items-center justify-center bg-white z-10 overflow-hidden will-change-[width,height] transform-gpu"
+        className="absolute flex flex-col items-center justify-center bg-card z-10 overflow-hidden will-change-[width,height] transform-gpu"
         variants={expandVariants}
         onAnimationComplete={() => {
           if (targetRoute) router.push(targetRoute);
