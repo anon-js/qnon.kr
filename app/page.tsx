@@ -48,7 +48,7 @@ export default function HomePage() {
   else if (isReturning && !hasShrunk) animationTarget = 'initial';
 
   return (
-    <m.div
+    <m.main
       exit={'expand'}
       initial={isReturning ? 'expand' : 'initial'}
       animate={animationTarget}
@@ -68,6 +68,6 @@ export default function HomePage() {
       >
         <HomeCardContent targetRoute={targetRoute} isReturning={isReturning} onNavigate={handleClick} />
       </m.div>
-    </m.div>
+    </m.main>
   );
 }
