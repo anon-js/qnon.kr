@@ -5,13 +5,7 @@ import { ACTIONS, ButtonListType } from '@/lib/homeConfig';
 import { ArrowUpRight } from 'lucide-react';
 import { memo } from 'react';
 
-function ActionButtons({
-  disabled,
-  onNavigate,
-}: {
-  disabled: boolean;
-  onNavigate: (href: string) => void;
-}) {
+function ActionButtons({ disabled, onNavigate }: { disabled: boolean; onNavigate: (href: string) => void }) {
   return (
     <nav className="max-md:w-full flex flex-row md:flex-col gap-2 items-center md:items-stretch">
       {ACTIONS.map((button: ButtonListType) => (

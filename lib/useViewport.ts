@@ -19,7 +19,7 @@ export function useViewport() {
     };
 
     update();
-    
+
     const debouncedUpdate = debounce(update, 200);
     window.addEventListener('resize', debouncedUpdate);
     return () => window.removeEventListener('resize', debouncedUpdate);
