@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence } from 'motion/react';
+import { AnimatePresence, domAnimation, LazyMotion } from 'motion/react';
 import { usePathname } from 'next/navigation';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
@@ -17,11 +17,13 @@ export const TransitionProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <TransitionContext.Provider value={{ isReturning, setIsReturning }}>
-      <AnimatePresence mode="wait" initial={false}>
-        <div key={pathname} className="w-full h-full flex flex-col">
-          {children}
-        </div>
-      </AnimatePresence>
+      <LazyMotion features={domAnimation}>
+        <AnimatePresence mode="wait" initial={false}>
+          <div key={pathname} className="w-full h-full flex flex-col">
+            {children}
+          </div>
+        </AnimatePresence>
+      </LazyMotion>
     </TransitionContext.Provider>
   );
 };

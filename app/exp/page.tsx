@@ -1,4 +1,3 @@
-'use client';
 import { SubPageContainer } from '@/components/SubPageContainer';
 import { IconPhotoSearch } from '@tabler/icons-react';
 import Image from 'next/image';

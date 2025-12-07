@@ -1,4 +1,3 @@
-'use client';
 import { SubPageContainer } from '@/components/SubPageContainer';
 import { projectsData } from '@/lib/projectsData';
 import { Folder } from 'lucide-react';

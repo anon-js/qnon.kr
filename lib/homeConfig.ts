@@ -18,11 +18,3 @@ export const CONTACTS: ButtonListType[] = [
   { label: '메일', href: 'mailto:anon@qnon.kr', icon: Mail },
   { label: '깃허브', href: 'https://github.com/anon-js', icon: IconBrandGithub },
 ];
-
-export const CARD_DIMENSIONS = {
-  MOBILE: {
-    PORTRAIT: { w: 320, h: 540 },
-    LANDSCAPE: { w: 540, h: 320 },
-  },
-  DESKTOP: { w: 720, h: 400 },
-};
