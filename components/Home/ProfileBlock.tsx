@@ -1,8 +1,9 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { memo } from 'react';
 
-export default function ProfileBlock() {
+function ProfileBlock() {
   return (
     <div className="w-full flex flex-col justify-center gap-4">
       <div className="flex flex-row items-center gap-4">
@@ -23,3 +24,5 @@ export default function ProfileBlock() {
     </div>
   );
 }
+
+export default memo(ProfileBlock);

@@ -6,7 +6,7 @@ import { CARD_DIMENSIONS } from '@/lib/homeConfig';
 import { useViewport } from '@/lib/useViewport';
 import { motion, Variants } from 'motion/react';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
 
 export default function HomePage() {
@@ -43,7 +43,7 @@ export default function HomePage() {
     [isMobile, isRotate, MOBILE, DESKTOP],
   );
 
-  const handleClick = (href: string) => setTargetRoute(href);
+  const handleClick = useCallback((href: string) => setTargetRoute(href), []);
 
   let animationTarget = 'initial';
   if (targetRoute) animationTarget = 'expand';

@@ -3,9 +3,9 @@
 import { Button } from '@/components/ui/button';
 import { ButtonListType, CONTACTS } from '@/lib/homeConfig';
 import Link from 'next/link';
-import React from 'react';
+import React, { memo } from 'react';
 
-export default function ContactButtons() {
+function ContactButtons() {
   return (
     <address className="flex flex-row gap-1 items-center not-italic">
       {CONTACTS.map((button: ButtonListType) => {
@@ -27,3 +27,5 @@ export default function ContactButtons() {
     </address>
   );
 }
+
+export default memo(ContactButtons);
