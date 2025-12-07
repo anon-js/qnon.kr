@@ -95,6 +95,23 @@ body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --card-w: 320px;
+  --card-h: 540px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --card-w: 720px;
+    --card-h: 400px;
+  }
+}
+
+@media (max-width: 767.9px) and (orientation: landscape) {
+  :root {
+    --card-w: 540px;
+    --card-h: 320px;
+  }
 }
 
 @supports (width: -webkit-fill-available) {

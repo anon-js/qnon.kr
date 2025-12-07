@@ -1,8 +1,9 @@
-'use client';
 import { SubPageContainer } from '@/components/SubPageContainer';
-import { TimelineItem } from '@/components/TimelineItem';
-import { fadeContainer } from '@/lib/openingVariants';
-import { motion } from 'motion/react';
+import dynamic from 'next/dynamic';
+
+const EducationList = dynamic(() => import('@/components/EducationList').then((mod) => mod.EducationList), {
+  loading: () => <div className="h-[200px] animate-pulse bg-muted/10 rounded-lg" />,
+});
 
 const educationList = [
   {
@@ -20,18 +21,7 @@ const educationList = [
 export default function EducationPage() {
   return (
     <SubPageContainer title="학력">
-      <motion.ol
-        className="flex flex-col gap-12 relative ml-4 mt-8 py-8 border-s border-gray-200 dark:border-gray-700"
-        variants={fadeContainer}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        custom={{ delayChildren: 0.4, staggerChildren: 0.12 }}
-      >
-        {educationList.map((education) => (
-          <TimelineItem key={education.title} {...education} />
-        ))}
-      </motion.ol>
+      <EducationList educationList={educationList} />
     </SubPageContainer>
   );
 }

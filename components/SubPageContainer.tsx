@@ -2,7 +2,7 @@
 
 import { useTransitionContext } from '@/app/context/TransitionContext';
 import { fadeContainer } from '@/lib/openingVariants';
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import SubPageHeader from './SubPageHeader';
@@ -27,7 +27,7 @@ export const SubPageContainer = ({ title, link, children }: SubPageContainerProp
   };
 
   return (
-    <motion.main
+    <m.main
       initial="hidden"
       animate="visible"
       exit="exit"
@@ -37,6 +37,6 @@ export const SubPageContainer = ({ title, link, children }: SubPageContainerProp
     >
       <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={() => handleGoBack(link)} title={title} />
       <div className="flex flex-col flex-1 mt-16">{children}</div>
-    </motion.main>
+    </m.main>
   );
 };

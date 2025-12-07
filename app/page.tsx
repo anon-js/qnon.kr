@@ -1,13 +1,14 @@
 'use client';
 
-import HomeCardContent from '@/components/Home/HomeCardContent';
-import HomeSkeleton from '@/components/Home/HomeSkeleton';
-import { CARD_DIMENSIONS } from '@/lib/homeConfig';
-import { useViewport } from '@/lib/useViewport';
-import { motion, Variants } from 'motion/react';
+import { m, Variants } from 'motion/react';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
+
+const HomeCardContent = dynamic(() => import('@/components/Home/HomeCardContent'), {
+  loading: () => <div className="w-full h-full bg-muted/10 animate-pulse" />,
+});
 
 export default function HomePage() {
   const router = useRouter();
@@ -16,14 +17,11 @@ export default function HomePage() {
   const [targetRoute, setTargetRoute] = useState<string | null>(null);
   const [hasShrunk, setHasShrunk] = useState<boolean>(!isReturning);
 
-  const { isMobile, isRotate, isLoaded } = useViewport();
-  const { MOBILE, DESKTOP } = CARD_DIMENSIONS;
-
   const expandVariants: Variants = useMemo(
     () => ({
       initial: {
-        width: isMobile ? (isRotate ? MOBILE.LANDSCAPE.w : MOBILE.PORTRAIT.w) : DESKTOP.w,
-        height: isMobile ? (isRotate ? MOBILE.LANDSCAPE.h : MOBILE.PORTRAIT.h) : DESKTOP.h,
+        width: 'var(--card-w)',
+        height: 'var(--card-h)',
         borderRadius: 16,
         transition: {
           duration: 0.3,
@@ -40,7 +38,7 @@ export default function HomePage() {
         },
       },
     }),
-    [isMobile, isRotate, MOBILE, DESKTOP],
+    [],
   );
 
   const handleClick = useCallback((href: string) => setTargetRoute(href), []);
@@ -49,24 +47,14 @@ export default function HomePage() {
   if (targetRoute) animationTarget = 'expand';
   else if (isReturning && !hasShrunk) animationTarget = 'initial';
 
-  if (!isLoaded) {
-    return (
-      <div className="flex items-center justify-center w-full min-h-screen bg-muted relative overflow-hidden">
-        <div className="absolute flex flex-col items-center justify-center bg-card z-10 overflow-hidden w-[320px] h-[540px] md:w-[720px] md:h-[400px] rounded-lg">
-          <HomeSkeleton />
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <motion.div
+    <m.div
       exit={'expand'}
       initial={isReturning ? 'expand' : 'initial'}
       animate={animationTarget}
       className="flex items-center justify-center w-full min-h-screen bg-muted relative overflow-hidden"
     >
-      <motion.div
+      <m.div
         className="absolute flex flex-col items-center justify-center bg-card z-10 overflow-hidden will-change-[width,height] transform-gpu"
         variants={expandVariants}
         onAnimationComplete={() => {
@@ -78,13 +66,8 @@ export default function HomePage() {
           }
         }}
       >
-        <HomeCardContent
-          isRotate={isRotate}
-          targetRoute={targetRoute}
-          isReturning={isReturning}
-          onNavigate={handleClick}
-        />
-      </motion.div>
-    </motion.div>
+        <HomeCardContent targetRoute={targetRoute} isReturning={isReturning} onNavigate={handleClick} />
+      </m.div>
+    </m.div>
   );
 }
