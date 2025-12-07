@@ -1,3 +1,4 @@
+import { debounce } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 
 export function useViewport() {
@@ -18,8 +19,10 @@ export function useViewport() {
     };
 
     update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    
+    const debouncedUpdate = debounce(update, 200);
+    window.addEventListener('resize', debouncedUpdate);
+    return () => window.removeEventListener('resize', debouncedUpdate);
   }, []);
 
   return { isMobile, isRotate, isLoaded } as const;

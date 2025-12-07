@@ -5,7 +5,7 @@ import ContactButtons from '@/components/Home/ContactButtons';
 import ProfileBlock from '@/components/Home/ProfileBlock';
 import { CARD_DIMENSIONS } from '@/lib/homeConfig';
 import { cn } from '@/lib/utils';
-import { ModeToggle } from '../ModeToggle';
+import ModeToggle from '../ModeToggle';
 
 interface HomeCardContentProps {
   isRotate: boolean;

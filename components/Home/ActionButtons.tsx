@@ -3,8 +3,9 @@
 import { Button } from '@/components/ui/button';
 import { ACTIONS, ButtonListType } from '@/lib/homeConfig';
 import { ArrowUpRight } from 'lucide-react';
+import { memo } from 'react';
 
-export default function ActionButtons({
+function ActionButtons({
   disabled,
   onNavigate,
 }: {
@@ -29,3 +30,5 @@ export default function ActionButtons({
     </nav>
   );
 }
+
+export default memo(ActionButtons);

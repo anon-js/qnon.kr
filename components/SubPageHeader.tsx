@@ -1,6 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { ModeToggle } from './ModeToggle';
+import ModeToggle from './ModeToggle';
 import { Button } from './ui/button';
 
 interface SubPageHeaderProps {
