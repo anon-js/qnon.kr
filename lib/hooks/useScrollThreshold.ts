@@ -23,7 +23,7 @@ export function useScrollThreshold(ref: RefObject<HTMLElement | null>, threshold
     element.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
-      element.removeEventListener('scroll', handleScroll, { passive: true });
+      element.removeEventListener('scroll', handleScroll);
       
       if (frameId !== null) {
         cancelAnimationFrame(frameId);
