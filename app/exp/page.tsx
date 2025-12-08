@@ -20,7 +20,7 @@ const experienceList = [
 export default function ExperiencePage() {
   return (
     <SubPageContainer title="경험">
-      <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(480px,1fr))] mt-4">
+      <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(320px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(480px,1fr))]">
         {experienceList.map((experience) => (
           <article
             key={experience.title}
