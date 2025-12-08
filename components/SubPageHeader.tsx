@@ -1,5 +1,5 @@
+import { useScrollThreshold } from '@/lib/hooks/useScrollThreshold';
 import { ArrowLeft } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
 import ModeToggle from './ModeToggle';
 import { Button } from './ui/button';
 
@@ -10,30 +10,7 @@ interface SubPageHeaderProps {
 }
 
 export default function SubPageHeader({ scrollContainerRef, handleGoBack, title }: SubPageHeaderProps) {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  const handleScroll = useCallback(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      const shouldShowBorder = scrollContainer.scrollTop > 10;
-      setIsScrolled((prev) => {
-        if (prev !== shouldShowBorder) {
-          return shouldShowBorder;
-        }
-        return prev;
-      });
-    }
-  }, [scrollContainerRef]);
-
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
-      return () => {
-        scrollContainer.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [handleScroll, scrollContainerRef]);
+  const isScrolled = useScrollThreshold(scrollContainerRef, 10);
 
   return (
     <header
