@@ -10,6 +10,11 @@ const HomeCardContent = dynamic(() => import('@/components/Home/HomeCardContent'
   loading: () => <div className="w-full h-full bg-muted/10 animate-pulse" />,
 });
 
+const ModeToggle = dynamic(() => import('@/components/ModeToggle'), {
+  ssr: false,
+  loading: () => <div className="w-9 h-9" />,
+});
+
 export default function HomePage() {
   const router = useRouter();
   const { isReturning, setIsReturning } = useTransitionContext();
@@ -66,6 +71,9 @@ export default function HomePage() {
           }
         }}
       >
+        <div className="absolute top-4 right-4 md:top-8 md:right-8 z-9999">
+          <ModeToggle />
+        </div>
         <HomeCardContent targetRoute={targetRoute} isReturning={isReturning} onNavigate={handleClick} />
       </m.div>
     </m.main>

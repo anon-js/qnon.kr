@@ -17,7 +17,7 @@ interface EducationListProps {
 export function EducationList({ educationList }: EducationListProps) {
   return (
     <m.ol
-      className="flex flex-col gap-12 relative ml-4 mt-8 py-8 border-s border-gray-200 dark:border-gray-700"
+      className="flex flex-col gap-12 relative ml-4 py-8 border-s border-gray-200 dark:border-gray-700"
       variants={fadeContainer}
       initial="hidden"
       animate="visible"

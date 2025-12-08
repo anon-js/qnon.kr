@@ -4,12 +4,6 @@ import ActionButtons from '@/components/Home/ActionButtons';
 import ContactButtons from '@/components/Home/ContactButtons';
 import ProfileBlock from '@/components/Home/ProfileBlock';
 import { cn } from '@/lib/utils';
-import dynamic from 'next/dynamic';
-
-const ModeToggle = dynamic(() => import('../ModeToggle'), {
-  ssr: false,
-  loading: () => <div className="w-9 h-9" />,
-});
 
 interface HomeCardContentProps {
   targetRoute: string | null;
@@ -24,9 +18,6 @@ export default function HomeCardContent({ targetRoute, isReturning, onNavigate }
         'flex flex-1 flex-col justify-between flex-shrink-0 w-(--card-w) max-h-(--card-h) p-4 md:p-8 relative',
       )}
     >
-      <div className="absolute top-4 right-4 md:top-8 md:right-8 z-9999">
-        <ModeToggle />
-      </div>
       <div className="flex flex-1 flex-col md:flex-row gap-4 items-center justify-center md:justify-between">
         <ProfileBlock />
         <ActionButtons disabled={!!targetRoute || isReturning} onNavigate={onNavigate} />
