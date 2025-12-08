@@ -32,7 +32,7 @@ export const SubPageContainer = ({ title, link, children }: SubPageContainerProp
       animate="visible"
       exit="exit"
       variants={fadeContainer}
-      className="flex flex-col flex-1 bg-background relative overflow-y-auto p-6"
+      className="flex flex-col flex-1 bg-background relative overflow-y-auto px-4 py-2 md:p-6"
       ref={scrollContainerRef}
     >
       <SubPageHeader scrollContainerRef={scrollContainerRef} handleGoBack={() => handleGoBack(link)} title={title} />
