@@ -1,9 +1,11 @@
 'use client';
 
-import ActionButtons from '@/components/Home/ActionButtons';
-import ContactButtons from '@/components/Home/ContactButtons';
-import ProfileBlock from '@/components/Home/ProfileBlock';
+import ActionButtons from '@/components/home/ActionButtons';
+import ContactButtons from '@/components/home/ContactButtons';
+import ProfileBlock from '@/components/home/ProfileBlock';
 import { cn } from '@/lib/utils';
+
+import { memo } from 'react';
 
 interface HomeCardContentProps {
   targetRoute: string | null;
@@ -11,7 +13,7 @@ interface HomeCardContentProps {
   onNavigate: (href: string) => void;
 }
 
-export default function HomeCardContent({ targetRoute, isReturning, onNavigate }: HomeCardContentProps) {
+function HomeCardContent({ targetRoute, isReturning, onNavigate }: HomeCardContentProps) {
   return (
     <div
       className={cn(
@@ -30,3 +32,5 @@ export default function HomeCardContent({ targetRoute, isReturning, onNavigate }
     </div>
   );
 }
+
+export default memo(HomeCardContent);

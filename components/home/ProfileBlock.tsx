@@ -1,16 +1,25 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import Image from 'next/image';
 import { memo } from 'react';
+import { preconnect } from 'react-dom';
 
 function ProfileBlock() {
+  preconnect('https://avatars.githubusercontent.com');
+
   return (
     <div className="w-full flex flex-col justify-center gap-4">
       <div className="flex flex-row items-center gap-4">
-        <Avatar className="size-20 rounded-full border">
-          <AvatarImage src="https://github.com/anon-js.png" alt="anon의 프로필 사진" />
-          <AvatarFallback>AJ</AvatarFallback>
-        </Avatar>
+        <div className="relative size-20 rounded-full border overflow-hidden bg-muted">
+          <Image
+            src="https://github.com/anon-js.png"
+            alt="anon의 프로필 사진"
+            fill
+            className="object-cover"
+            priority
+            sizes="80px"
+          />
+        </div>
         <div>
           <h1 className="text-2xl font-semibold">anon</h1>
           <p className="text-sm text-muted-foreground">프론트엔드 개발자</p>

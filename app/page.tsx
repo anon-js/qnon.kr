@@ -1,14 +1,11 @@
 'use client';
 
+import HomeCardContent from '@/components/home/HomeCardContent';
 import { m, Variants } from 'motion/react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
-
-const HomeCardContent = dynamic(() => import('@/components/Home/HomeCardContent'), {
-  loading: () => <div className="w-full h-full bg-muted/10 animate-pulse" />,
-});
 
 const ModeToggle = dynamic(() => import('@/components/ModeToggle'), {
   ssr: false,
@@ -46,7 +43,22 @@ export default function HomePage() {
     [],
   );
 
-  const handleClick = useCallback((href: string) => setTargetRoute(href), []);
+  const handleClick = useCallback(
+    (href: string) => {
+      router.prefetch(href);
+      setTargetRoute(href);
+    },
+    [router],
+  );
+
+  const handleAnimationComplete = useCallback(() => {
+    if (targetRoute) router.push(targetRoute);
+
+    if (isReturning && !hasShrunk) {
+      setIsReturning(false);
+      setHasShrunk(true);
+    }
+  }, [targetRoute, router, isReturning, hasShrunk, setIsReturning]);
 
   let animationTarget = 'initial';
   if (targetRoute) animationTarget = 'expand';
@@ -62,14 +74,7 @@ export default function HomePage() {
       <m.div
         className="absolute flex flex-col items-center justify-center bg-card z-10 overflow-hidden will-change-[width,height] transform-gpu"
         variants={expandVariants}
-        onAnimationComplete={() => {
-          if (targetRoute) router.push(targetRoute);
-
-          if (isReturning && !hasShrunk) {
-            setIsReturning(false);
-            setHasShrunk(true);
-          }
-        }}
+        onAnimationComplete={handleAnimationComplete}
       >
         <div className="absolute top-4 right-4 md:top-8 md:right-8 z-9999">
           <ModeToggle />
