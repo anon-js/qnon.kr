@@ -17,6 +17,7 @@ function ContactButtons() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={button.label + '(으)로 연락하기'}
+              className="flex gap-2 items-center"
             >
               {Icon && <Icon />}
               {button.label}
