@@ -1,4 +1,4 @@
-import { SubPageContainer } from '@/components/SubPageContainer';
+import { SubPageContainer } from '@/components/layout/SubPageContainer';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { projectsData } from '@/lib/projectsData';
@@ -45,7 +45,6 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
             <Button
               variant="outline"
               className="w-full h-full absolute top-0 left-0 right-0 bottom-0 bg-background/60 hover:bg-accent/70"
-              asChild
             >
               <Link href={project.link} target="_blank" rel="noopener noreferrer">
                 자세히 보기
