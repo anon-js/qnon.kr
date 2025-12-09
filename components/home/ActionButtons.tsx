@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/common/Button';
 import { ACTIONS, ButtonListType } from '@/lib/homeConfig';
 import { ArrowUpRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';

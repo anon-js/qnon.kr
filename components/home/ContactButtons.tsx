@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/common/Button';
 import { ButtonListType, CONTACTS } from '@/lib/homeConfig';
 import Link from 'next/link';
 import React, { memo } from 'react';
@@ -17,6 +17,7 @@ function ContactButtons() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={button.label + '(으)로 연락하기'}
+              className="flex gap-2 items-center"
             >
               {Icon && <Icon />}
               {button.label}

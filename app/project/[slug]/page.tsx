@@ -1,6 +1,6 @@
-import { SubPageContainer } from '@/components/layout/SubPageContainer';
-import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/common/Badge';
+import { Button } from '@/components/common/Button';
+import { SubPageContainer } from '@/components/common/SubPageContainer';
 import { projectsData } from '@/lib/projectsData';
 import Link from 'next/link';
 

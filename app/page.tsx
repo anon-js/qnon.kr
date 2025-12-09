@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
 
-const ModeToggle = dynamic(() => import('@/components/layout/ModeToggle'), {
+const ModeToggle = dynamic(() => import('@/components/common/ModeToggle'), {
   ssr: false,
   loading: () => <div className="w-9 h-9" />,
 });
