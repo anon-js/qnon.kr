@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@/components/layout/ThemeProvider';
+import { ThemeProvider } from '@/components/common/ThemeProvider';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { TransitionProvider } from './context/TransitionContext';

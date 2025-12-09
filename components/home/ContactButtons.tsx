@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/common/Button';
 import { ButtonListType, CONTACTS } from '@/lib/homeConfig';
 import Link from 'next/link';
 import React, { memo } from 'react';

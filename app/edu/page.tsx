@@ -1,7 +1,7 @@
-import { SubPageContainer } from '@/components/layout/SubPageContainer';
+import { SubPageContainer } from '@/components/common/SubPageContainer';
 import dynamic from 'next/dynamic';
 
-const Timeline = dynamic(() => import('@/components/education/Timeline').then((mod) => mod.TimelineList), {
+const Timeline = dynamic(() => import('@/components/common/Timeline').then((mod) => mod.TimelineList), {
   loading: () => <div className="h-[200px] animate-pulse bg-muted/10 rounded-lg" />,
 });
 

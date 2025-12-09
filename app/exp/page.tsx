@@ -1,4 +1,4 @@
-import { SubPageContainer } from '@/components/layout/SubPageContainer';
+import { SubPageContainer } from '@/components/common/SubPageContainer';
 import { IconPhotoSearch } from '@tabler/icons-react';
 import Image from 'next/image';
 
