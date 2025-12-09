@@ -1,7 +1,7 @@
 import { useScrollThreshold } from '@/lib/hooks/useScrollThreshold';
 import { ArrowLeft } from 'lucide-react';
 import ModeToggle from './ModeToggle';
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/Button';
 
 interface SubPageHeaderProps {
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;

@@ -1,11 +1,11 @@
-import { SubPageContainer } from '@/components/SubPageContainer';
+import { SubPageContainer } from '@/components/layout/SubPageContainer';
 import dynamic from 'next/dynamic';
 
-const EducationList = dynamic(() => import('@/components/EducationList').then((mod) => mod.EducationList), {
+const Timeline = dynamic(() => import('@/components/education/Timeline').then((mod) => mod.TimelineList), {
   loading: () => <div className="h-[200px] animate-pulse bg-muted/10 rounded-lg" />,
 });
 
-const educationList = [
+const timelineList = [
   {
     date: '2024.03 - 현재',
     title: '한국성서대학교 (컴퓨터소프트웨어학과)',
@@ -21,7 +21,7 @@ const educationList = [
 export default function EducationPage() {
   return (
     <SubPageContainer title="학력">
-      <EducationList educationList={educationList} />
+      <Timeline timelineList={timelineList} />
     </SubPageContainer>
   );
 }

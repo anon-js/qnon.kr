@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { ButtonListType, CONTACTS } from '@/lib/homeConfig';
 import Link from 'next/link';
 import React, { memo } from 'react';
@@ -11,7 +11,7 @@ function ContactButtons() {
       {CONTACTS.map((button: ButtonListType) => {
         const Icon = button.icon as React.ElementType | undefined;
         return (
-          <Button key={button.label} variant="link" size="sm" asChild>
+          <Button key={button.label} variant="link" size="sm">
             <Link
               href={button.href}
               target="_blank"

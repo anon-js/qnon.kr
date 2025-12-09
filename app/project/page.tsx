@@ -1,4 +1,4 @@
-import { SubPageContainer } from '@/components/SubPageContainer';
+import { SubPageContainer } from '@/components/layout/SubPageContainer';
 import { projectsData } from '@/lib/projectsData';
 import { Folder } from 'lucide-react';
 import Link from 'next/link';
