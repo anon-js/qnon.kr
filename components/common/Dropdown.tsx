@@ -60,7 +60,7 @@ export function Dropdown({ trigger, children, className, contentClassName, align
             align === 'right' ? 'right-0' : 'left-0',
             contentClassName,
           )}
-          role="menu"
+          role="listbox"
           aria-labelledby={triggerId}
           onClick={() => setIsOpen(false)}
         >
@@ -81,7 +81,7 @@ export function DropdownItem({ children, className, ...props }: DropdownItemProp
     <li>
       <Button
         variant="ghost"
-        role="menuitem"
+        role="option"
         className={cn(
           'relative flex w-full cursor-default select-none items-center justify-start rounded-sm px-2 py-1.5 text-sm outline-none transition-colors h-auto font-normal',
           className,
