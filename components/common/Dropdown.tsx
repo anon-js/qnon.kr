@@ -15,6 +15,7 @@ interface DropdownProps {
 export function Dropdown({ trigger, children, className, contentClassName, align = 'right' }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const triggerId = useRef(`dropdown-trigger-${Math.random().toString(36).substr(2, 9)}`).current;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -32,6 +33,7 @@ export function Dropdown({ trigger, children, className, contentClassName, align
   return (
     <div className={cn('relative', className)} ref={dropdownRef}>
       <div 
+        id={triggerId}
         onClick={() => setIsOpen(!isOpen)} 
         className="inline-flex"
         role="button"
@@ -42,6 +44,9 @@ export function Dropdown({ trigger, children, className, contentClassName, align
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             setIsOpen(!isOpen);
+          } else if (e.key === 'Escape' && isOpen) {
+            e.preventDefault();
+            setIsOpen(false);
           }
         }}
       >
@@ -56,6 +61,7 @@ export function Dropdown({ trigger, children, className, contentClassName, align
             contentClassName,
           )}
           role="menu"
+          aria-labelledby={triggerId}
           onClick={() => setIsOpen(false)}
         >
           {children}
