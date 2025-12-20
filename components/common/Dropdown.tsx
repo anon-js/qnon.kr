@@ -23,15 +23,38 @@ export function Dropdown({ trigger, children, className, contentClassName, align
       }
     };
 
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscapeKey);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscapeKey);
     };
-  }, []);
+  }, [isOpen]);
+
+  const handleTriggerKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setIsOpen(!isOpen);
+    }
+  };
 
   return (
     <div className={cn('relative', className)} ref={dropdownRef}>
-      <div onClick={() => setIsOpen(!isOpen)} className="inline-flex">
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        onKeyDown={handleTriggerKeyDown}
+        className="inline-flex"
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+      >
         {trigger}
       </div>
 
