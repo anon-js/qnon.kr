@@ -31,7 +31,20 @@ export function Dropdown({ trigger, children, className, contentClassName, align
 
   return (
     <div className={cn('relative', className)} ref={dropdownRef}>
-      <div onClick={() => setIsOpen(!isOpen)} className="inline-flex">
+      <div 
+        onClick={() => setIsOpen(!isOpen)} 
+        className="inline-flex"
+        role="button"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setIsOpen(!isOpen);
+          }
+        }}
+      >
         {trigger}
       </div>
 
@@ -42,6 +55,7 @@ export function Dropdown({ trigger, children, className, contentClassName, align
             align === 'right' ? 'right-0' : 'left-0',
             contentClassName,
           )}
+          role="menu"
           onClick={() => setIsOpen(false)}
         >
           {children}
@@ -58,7 +72,7 @@ interface DropdownItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement
 
 export function DropdownItem({ children, className, ...props }: DropdownItemProps) {
   return (
-    <li>
+    <li role="menuitem">
       <Button
         variant="ghost"
         className={cn(
