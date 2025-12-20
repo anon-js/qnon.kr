@@ -12,7 +12,7 @@ export function Breadcrumbs({ className }: { className?: string }) {
 
   return (
     <nav aria-label="Breadcrumb" className={cn('flex items-center text-sm text-muted-foreground mb-4', className)}>
-      <Link href="/" className="hover:text-foreground transition-colors pl-2">
+      <Link href="/" className="hover:text-foreground transition-colors pl-2" aria-label="홈으로 이동">
         <HomeIcon className="size-4" />
       </Link>
       {segments.map((segment, index) => {
