@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/common/Button';
 import { cn } from '@/lib/utils';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useId, useRef, useState } from 'react';
 
 interface DropdownProps {
   trigger: ReactNode;
@@ -15,7 +15,7 @@ interface DropdownProps {
 export function Dropdown({ trigger, children, className, contentClassName, align = 'right' }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const triggerId = useRef(`dropdown-trigger-${Math.random().toString(36).substr(2, 9)}`).current;
+  const triggerId = useId();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
