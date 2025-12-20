@@ -41,7 +41,7 @@ export function Dropdown({ trigger, children, className, contentClassName, align
   }, [handleEscapeKey]);
 
   const handleTriggerKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.code === 'Space') {
+    if (event.code === 'Enter' || event.code === 'Space') {
       event.preventDefault();
       setIsOpen(!isOpen);
     }
