@@ -1,18 +1,37 @@
 'use client';
 
+import { useTransitionContext } from '@/app/context/TransitionContext';
 import { cn } from '@/lib/utils';
 import { HomeIcon } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Fragment } from 'react';
 
 export function Breadcrumbs({ className }: { className?: string }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { setIsReturning } = useTransitionContext();
   const segments = pathname.split('/').filter(Boolean);
+
+  const handleNavigate = (href: string) => {
+    setIsReturning(true);
+
+    setTimeout(() => {
+      router.push(href);
+    }, 0);
+  };
 
   return (
     <nav aria-label="Breadcrumb" className={cn('flex items-center text-sm text-muted-foreground mb-4', className)}>
-      <Link href="/" className="hover:text-foreground transition-colors pl-2" aria-label="홈으로 이동">
+      <Link
+        href="/"
+        className="hover:text-foreground transition-colors pl-2"
+        aria-label="홈으로 이동"
+        onClick={(e) => {
+          e.preventDefault();
+          handleNavigate('/');
+        }}
+      >
         <HomeIcon className="size-4" />
       </Link>
       {segments.map((segment, index) => {
