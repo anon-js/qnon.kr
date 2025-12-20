@@ -72,9 +72,10 @@ interface DropdownItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement
 
 export function DropdownItem({ children, className, ...props }: DropdownItemProps) {
   return (
-    <li role="menuitem">
+    <li>
       <Button
         variant="ghost"
+        role="menuitem"
         className={cn(
           'relative flex w-full cursor-default select-none items-center justify-start rounded-sm px-2 py-1.5 text-sm outline-none transition-colors h-auto font-normal',
           className,
