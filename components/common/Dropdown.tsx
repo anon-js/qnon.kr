@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/common/Button';
 import { cn } from '@/lib/utils';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 interface DropdownProps {
   trigger: ReactNode;
@@ -16,15 +16,18 @@ export function Dropdown({ trigger, children, className, contentClassName, align
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const handleEscapeKey = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    },
+    [isOpen],
+  );
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    const handleEscapeKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isOpen) {
         setIsOpen(false);
       }
     };
@@ -35,10 +38,10 @@ export function Dropdown({ trigger, children, className, contentClassName, align
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscapeKey);
     };
-  }, [isOpen]);
+  }, [handleEscapeKey]);
 
   const handleTriggerKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === 'Enter' || event.code === 'Space') {
       event.preventDefault();
       setIsOpen(!isOpen);
     }
