@@ -1,7 +1,9 @@
 import { Button } from '@/components/common/Button';
+import { Dropdown, DropdownItem } from '@/components/common/Dropdown';
 import { useScrollThreshold } from '@/lib/hooks/useScrollThreshold';
-import { ArrowLeft } from 'lucide-react';
-import ModeToggle from './ModeToggle';
+import { cn } from '@/lib/utils';
+import { ArrowLeft, Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 interface SubPageHeaderProps {
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;
@@ -11,6 +13,7 @@ interface SubPageHeaderProps {
 
 export default function SubPageHeader({ scrollContainerRef, handleGoBack, title }: SubPageHeaderProps) {
   const isScrolled = useScrollThreshold(scrollContainerRef, 10);
+  const { setTheme } = useTheme();
 
   return (
     <header
@@ -23,7 +26,27 @@ export default function SubPageHeader({ scrollContainerRef, handleGoBack, title 
       </Button>
       <h1 className="text-2xl font-bold">{title}</h1>
       <div className="ml-auto pr-2 md:pr-4">
-        <ModeToggle btnClassName={isScrolled ? 'border-transparent! bg-transparent! shadow-none!' : ''} />
+        <Dropdown
+          trigger={
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label="테마 변경"
+              className={cn(
+                'transition-all duration-300',
+                isScrolled ? 'border-transparent! bg-transparent! shadow-none!' : '',
+              )}
+            >
+              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100" />
+            </Button>
+          }
+          contentClassName="w-36"
+        >
+          <DropdownItem onClick={() => setTheme('light')}>라이트 모드</DropdownItem>
+          <DropdownItem onClick={() => setTheme('dark')}>다크 모드</DropdownItem>
+          <DropdownItem onClick={() => setTheme('system')}>시스템 설정</DropdownItem>
+        </Dropdown>
       </div>
     </header>
   );

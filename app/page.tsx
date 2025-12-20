@@ -1,20 +1,19 @@
 'use client';
 
+import { Button } from '@/components/common/Button';
+import { Dropdown, DropdownItem } from '@/components/common/Dropdown';
 import HomeCardContent from '@/components/home/HomeCardContent';
+import { Moon, Sun } from 'lucide-react';
 import { m, Variants } from 'motion/react';
-import dynamic from 'next/dynamic';
+import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import { useTransitionContext } from './context/TransitionContext';
 
-const ModeToggle = dynamic(() => import('@/components/common/ModeToggle'), {
-  ssr: false,
-  loading: () => <div className="w-9 h-9" />,
-});
-
 export default function HomePage() {
   const router = useRouter();
   const { isReturning, setIsReturning } = useTransitionContext();
+  const { setTheme } = useTheme();
 
   const [targetRoute, setTargetRoute] = useState<string | null>(null);
   const [hasShrunk, setHasShrunk] = useState<boolean>(!isReturning);
@@ -77,7 +76,19 @@ export default function HomePage() {
         onAnimationComplete={handleAnimationComplete}
       >
         <div className="absolute top-4 right-4 md:top-8 md:right-8 z-9999">
-          <ModeToggle />
+          <Dropdown
+            trigger={
+              <Button variant="outline" size="icon" aria-label="테마 변경" className="transition-all duration-300">
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100" />
+              </Button>
+            }
+            contentClassName="w-36"
+          >
+            <DropdownItem onClick={() => setTheme('light')}>라이트 모드</DropdownItem>
+            <DropdownItem onClick={() => setTheme('dark')}>다크 모드</DropdownItem>
+            <DropdownItem onClick={() => setTheme('system')}>시스템 설정</DropdownItem>
+          </Dropdown>
         </div>
         <HomeCardContent targetRoute={targetRoute} isReturning={isReturning} onNavigate={handleClick} />
       </m.div>

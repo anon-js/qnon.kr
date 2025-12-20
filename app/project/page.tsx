@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/common/Breadcrumbs';
 import { SubPageContainer } from '@/components/common/SubPageContainer';
 import { projectsData } from '@/lib/projectsData';
 import { Folder } from 'lucide-react';
@@ -6,6 +7,7 @@ import Link from 'next/link';
 export default function ProjectPage() {
   return (
     <SubPageContainer title="프로젝트">
+      <Breadcrumbs />
       <div className="grid gap-2 grid-cols-[repeat(auto-fill,minmax(60px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(100px,1fr))]">
         {projectsData.map((project) => (
           <Link

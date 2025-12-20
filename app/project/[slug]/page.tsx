@@ -1,4 +1,5 @@
 import { Badge } from '@/components/common/Badge';
+import { Breadcrumbs } from '@/components/common/Breadcrumbs';
 import { Button } from '@/components/common/Button';
 import { SubPageContainer } from '@/components/common/SubPageContainer';
 import { projectsData } from '@/lib/projectsData';
@@ -21,6 +22,7 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
 
   return (
     <SubPageContainer title={project.title} link="/project">
+      <Breadcrumbs />
       <div className="flex flex-wrap-reverse md:flex-nowrap md:flex-row flex-1 gap-2">
         <div className="flex flex-col flex-1 min-w-full md:min-w-0 gap-4 bg-muted border border-border rounded-lg p-4">
           <div className="flex flex-col gap-2">
