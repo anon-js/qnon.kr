@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/common/Button';
 import { cn } from '@/lib/utils';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 interface DropdownProps {
   trigger: ReactNode;
@@ -16,6 +16,15 @@ export function Dropdown({ trigger, children, className, contentClassName, align
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const handleEscapeKey = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    },
+    [isOpen],
+  );
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -24,14 +33,31 @@ export function Dropdown({ trigger, children, className, contentClassName, align
     };
 
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscapeKey);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscapeKey);
     };
-  }, []);
+  }, [handleEscapeKey]);
+
+  const handleTriggerKeyDown = (event: React.KeyboardEvent) => {
+    if (event.code === 'Enter' || event.code === 'Space') {
+      event.preventDefault();
+      setIsOpen(!isOpen);
+    }
+  };
 
   return (
     <div className={cn('relative', className)} ref={dropdownRef}>
-      <div onClick={() => setIsOpen(!isOpen)} className="inline-flex">
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        onKeyDown={handleTriggerKeyDown}
+        className="inline-flex"
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+      >
         {trigger}
       </div>
 
