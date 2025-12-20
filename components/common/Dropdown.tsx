@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/common/Button';
 import { cn } from '@/lib/utils';
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useCallback, useId, useRef, useState } from 'react';
 
 interface DropdownProps {
   trigger: ReactNode;
@@ -15,6 +15,7 @@ interface DropdownProps {
 export function Dropdown({ trigger, children, className, contentClassName, align = 'right' }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const triggerId = useId();
 
   const handleEscapeKey = useCallback(
     (event: KeyboardEvent) => {
@@ -68,6 +69,8 @@ export function Dropdown({ trigger, children, className, contentClassName, align
             align === 'right' ? 'right-0' : 'left-0',
             contentClassName,
           )}
+          role="listbox"
+          aria-labelledby={triggerId}
           onClick={() => setIsOpen(false)}
         >
           {children}
@@ -87,6 +90,7 @@ export function DropdownItem({ children, className, ...props }: DropdownItemProp
     <li>
       <Button
         variant="ghost"
+        role="option"
         className={cn(
           'relative flex w-full cursor-default select-none items-center justify-start rounded-sm px-2 py-1.5 text-sm outline-none transition-colors h-auto font-normal',
           className,
