@@ -19,4 +19,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            bash -ci "cd htdocs/qnon.kr && git pull origin main && pnpm i && pnpm build && pm2 reload qnon.kr --update-env"
+            bash -ci "cd htdocs/qnon.kl && git remote -v"
+            # bash -ci "cd htdocs/qnon.kr && git pull origin main && pnpm i && pnpm build && pm2 reload qnon.kr --update-env"
