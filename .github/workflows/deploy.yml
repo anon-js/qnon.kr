@@ -19,15 +19,13 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            source ~/.bashrc || source ~/.profile
+            export PATH="$HOME/anon/.nvm/versions/node/v22.22.0/bin/node"
+            export GIT_SSH_COMMAND="ssh -i $HOME/anon/.ssh/id_rsa -o StrictHostKeyChecking=no"
+          
+            cd /home/ubuntu/qnon.kr
             
-            cd htdocs/qnon.kr
-            
-            export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/id_rsa -o StrictHostKeyChecking=no"
             git pull origin main
             
-            [ -s "$HOME/anon/.nvm/nvm.sh" ] && \. "$HOME/anon/.nvm/nvm.sh"
-            nvm use --delete-prefix default || node -v
+            /home/anon/.nvm/versions/node/v22.22.0/bin/pnpm install
             
-            pnpm install
-            pm2 reload all
+            /home/anon/.nvm/versions/node/v22.22.0/bin/pm2 reload all
