@@ -22,7 +22,7 @@ jobs:
             export PATH="$HOME/anon/.nvm/versions/node/v22.22.0/bin/node"
             export GIT_SSH_COMMAND="ssh -i $HOME/anon/.ssh/id_rsa -o StrictHostKeyChecking=no"
           
-            cd /home/ubuntu/qnon.kr
+            cd htdocs/qnon.kr
             
             git pull origin main
             
