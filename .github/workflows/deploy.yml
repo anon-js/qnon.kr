@@ -19,7 +19,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            git pull origin main
-            pnpm i
+            cd htdocs
+            ls
+            # git pull origin main
+            # pnpm i
             # pnpm build
             # pm2 reload qnon.kr --update-env 
