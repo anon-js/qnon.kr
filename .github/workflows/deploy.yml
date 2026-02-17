@@ -19,10 +19,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            cd htdocs/qnon.kr
-            which pnpm
-            which node
-            which pm2
+            bash -ci "cd htdocs/qnon.kr && which pnpm && which node && which pm2"
             #export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/id_rsa -o StrictHostKeyChecking=no"
             #git pull origin main
             #/home/***/.nvm/versions/node/v22.22.0/bin/pnpm install
