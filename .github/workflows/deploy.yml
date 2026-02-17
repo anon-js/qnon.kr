@@ -20,4 +20,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            bash -ci "cd htdocs/qnon.kr && ssh -T git@github.com"
+            bash -ci "cd htdocs/qnon.kr && pnpm i && pnpm build && pm2 reload qnon.kr"
