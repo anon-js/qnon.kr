@@ -19,9 +19,15 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            bash -ci "cd htdocs/qnon.kr && which pnpm && which node && which pm2"
-            #export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/id_rsa -o StrictHostKeyChecking=no"
-            #git pull origin main
-            #/home/***/.nvm/versions/node/v22.22.0/bin/pnpm install
-            #pm2 reload qnon.kr
+            export PATH="$PATH:/home/anon/.nvm/versions/node/v22.22.0/bin/node" # 예시이므로 본인 경로 확인 필요
+            export GIT_SSH_COMMAND="ssh -i $HOME/anon/.ssh/id_rsa -o StrictHostKeyChecking=no"
+          
+            cd /home/ubuntu/qnon.kr
+            
+            git pull origin main
+            
+            /home/anon/.nvm/versions/node/v22.22.0/bin/pnpm install
+            
+            /home/anon/.nvm/versions/node/v22.22.0/bin/pm2 reload all
+
 
