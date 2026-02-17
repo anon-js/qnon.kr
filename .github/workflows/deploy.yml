@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            cd htdocs
+            cd htdocs/qnon.kr
             ls
             # git pull origin main
             # pnpm i
