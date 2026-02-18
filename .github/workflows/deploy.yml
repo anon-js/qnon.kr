@@ -1,4 +1,4 @@
-name: Deploy to Server
+name: Deploy qnon.kr Production
 
 on:
   push:
@@ -9,9 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.2
-
       - name: SSH Remote Commands
         uses: appleboy/ssh-action@v1.2.5
         with:
@@ -19,5 +16,12 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
+          command_timeout: 30m
           script: |
-            bash -ci "cd htdocs/qnon.kr && git fetch origin main && git pull origin main && pnpm i next@latest react@latest react-dom@latest && pnpm i && pnpm build && pm2 reload qnon.kr"
+            export PATH=$HOME/.nvm/versions/node/v22.22.0/bin:$PATH
+            cd ~/htdocs/qnon.kr
+            git fetch origin main
+            git reset --hard origin/main
+            pnpm install --frozen-lockfile
+            pnpm build
+            pm2 reload qnon.kr --update-env
