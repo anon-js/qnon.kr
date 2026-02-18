@@ -24,14 +24,6 @@ jobs:
             echo " "
             echo " "
             echo "==============================================="
-            echo "[Step 0] Checking Server Status..."
-            echo "==============================================="
-
-            pm2 show qnon.kr
-
-            echo " "
-            echo " "
-            echo "==============================================="
             echo "[Step 1] Fetching latest code..."
             echo "==============================================="
 
@@ -71,8 +63,6 @@ jobs:
             else
               echo " > No source changes. Skipping build & reload."
             fi
-
-            pm2 reload qnon.kr --update-env
             
             echo " "
             echo " "
