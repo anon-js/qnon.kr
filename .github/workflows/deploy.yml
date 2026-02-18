@@ -20,4 +20,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            bash -ci "cd htdocs/qnon.kr && git fetch origin main && git pull origin main && pnpm i && pnpm build && pm2 reload qnon.kr"
+            bash -ci "cd htdocs/qnon.kr && git fetch origin main && git pull origin main && pnpm i next@latest react@latest react-dom@latest && pnpm i && pnpm build && pm2 reload qnon.kr"
