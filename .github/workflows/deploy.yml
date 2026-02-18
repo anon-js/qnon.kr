@@ -20,8 +20,13 @@ jobs:
           script: |
             export PATH=$HOME/.nvm/versions/node/v22.22.0/bin:$PATH
             cd ~/htdocs/qnon.kr
+            
             git fetch origin main
             git reset --hard origin/main
-            pnpm install --frozen-lockfile
+            
+            if git diff --name-only HEAD@{1} HEAD | grep -q "pnpm-lock.yaml"; then
+              pnpm install --frozen-lockfile
+            fi
             pnpm build
+            
             pm2 reload qnon.kr --update-env
