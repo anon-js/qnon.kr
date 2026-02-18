@@ -28,7 +28,7 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
-            echo "==============================================="
+            echo "\n\n==============================================="
             echo "[Step 2] Checking dependency changes..."
             echo "==============================================="
 
@@ -39,7 +39,7 @@ jobs:
               echo " > No dependency changes. Skipping install."
             fi
 
-            echo "==============================================="
+            echo "\n\n==============================================="
             echo "[Step 3] Checking source code changes..."
             echo "==============================================="
 
@@ -47,13 +47,13 @@ jobs:
               echo " > Source code changed. Building..."
               pnpm build
               
-              echo "==============================================="
+              echo "\n\n==============================================="
               echo "[Step 4] Reloading Server..."
               echo "==============================================="
               pm2 reload qnon.kr --update-env
               echo " > Reload Complete."
             else
-              echo " > No source changes. Skipping build & reload."
+              echo "\n\n > No source changes. Skipping build & reload."
             fi
             
             echo "==============================================="
