@@ -19,7 +19,7 @@ jobs:
           command_timeout: 30m
           script: |
             export PATH=$HOME/.nvm/versions/node/v22.22.0/bin:$PATH
-            cd ~/htdocs/qnon.kr
+            cd ~/htdocs/qnon-kr-nextjs
 
             echo " "
             echo " "
@@ -69,7 +69,7 @@ jobs:
               else
                 echo " > Server is NOT running. Starting fresh..."
 
-                pm2 start pnpm --name "qnon.kr" -- start -p 3003
+                PORT=3002 pm2 start pnpm --name "qnon.kr" -- start
               fi
 
               echo " > Server Operation Complete."
