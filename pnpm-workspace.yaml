@@ -4,6 +4,6 @@ minimumReleaseAgeExclude:
   - baseline-browser-mapping
   - caniuse-lite
   - get-tsconfig
-ignoredBuiltDependencies:
+onlyBuiltDependencies:
   - sharp
   - unrs-resolver
