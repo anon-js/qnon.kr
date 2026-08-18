@@ -15,14 +15,14 @@ jobs:
     steps:
       # 1) 코드 체크아웃
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      # 2) Node + pnpm 세팅 (서버와 동일 버전)
+      # 2) Node + pnpm 세팅
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22.22.0
           cache: pnpm
@@ -35,8 +35,6 @@ jobs:
         run: pnpm build
 
       # 4) standalone 산출물을 한 폴더로 정리
-      #    standalone에는 node_modules와 server.js가 포함됨.
-      #    static/public은 standalone이 자동 포함하지 않으므로 직접 복사.
       - name: Assemble standalone bundle
         run: |
           mkdir -p deploy
@@ -45,7 +43,7 @@ jobs:
           cp -r .next/static deploy/.next/static
           cp -r public deploy/public
 
-      # 5) 서버로 전송 (rsync + SSH 키)
+      # 5) 서버로 전송
       - name: Deploy to server via rsync
         uses: burnett01/rsync-deployments@v9
         with:
@@ -56,7 +54,6 @@ jobs:
           remote_user: ${{ secrets.USERNAME }}
           remote_port: ${{ secrets.PORT }}
           remote_key: ${{ secrets.KEY }}
-
 
       # 6) 서버에서 프로세스 reload/start + 헬스체크
       - name: Restart and health check
