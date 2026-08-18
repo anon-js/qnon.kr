@@ -1,3 +1,9 @@
-onlyBuiltDependencies:
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - electron-to-chromium
+  - baseline-browser-mapping
+  - caniuse-lite
+  - get-tsconfig
+ignoredBuiltDependencies:
   - sharp
   - unrs-resolver

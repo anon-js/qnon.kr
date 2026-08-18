@@ -2,7 +2,7 @@
   "name": "qnon.kr",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@10.30.3",
+  "packageManager": "pnpm@11.22.0",
   "sideEffects": false,
   "scripts": {
     "dev": "next dev",
